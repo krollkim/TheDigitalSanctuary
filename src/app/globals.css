@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS Custom Properties ─────────────────────────────────────── */
+:root {
+  --color-off-white: #fafaf7;
+  --color-beige: #f5f5dc;
+  --color-warm: #ede8d0;
+  --color-sage: #b2ac88;
+  --color-sage-light: #d4d4b8;
+  --color-brown: #3d3530;
+  --color-brown-mid: #6b5d55;
+}
+
+/* ─── Smooth Scrolling ───────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Selection Color ────────────────────────────────────────────── */
+::selection {
+  background-color: var(--color-sage-light);
+  color: var(--color-brown);
+}
+
+/* ─── Focus Ring ─────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-beige);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-sage);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #8a8668;
+}
+
+/* ─── Typography Utilities ───────────────────────────────────────── */
+@layer components {
+  .heading-display {
+    @apply font-serif font-light tracking-wide leading-tight;
+  }
+  .heading-section {
+    @apply font-serif font-normal tracking-wide;
+  }
+  .body-balanced {
+    @apply font-sans font-light leading-relaxed;
+  }
+  .label-tag {
+    @apply font-sans text-xs font-medium tracking-widest uppercase;
+  }
+
+  /* ─── Sanctuary Card ─────────────────────────────────────────── */
+  .card-sanctuary {
+    @apply bg-white border border-sanctuary-sage-light rounded-2xl p-8 shadow-sanctuary
+    transition-all duration-500 ease-sanctuary
+    hover:shadow-sanctuary-md hover:-translate-y-1;
+  }
+
+  /* ─── Primary Button ─────────────────────────────────────────── */
+  .btn-primary {
+    @apply inline-flex items-center gap-3
+    bg-sanctuary-sage text-sanctuary-off-white
+    px-8 py-4 rounded-full
+    font-sans font-medium text-sm tracking-wide
+    transition-all duration-300 ease-sanctuary
+    hover:bg-sanctuary-sage-dark hover:shadow-sanctuary-md hover:-translate-y-0.5
+    focus-visible:ring-2 focus-visible:ring-sanctuary-sage focus-visible:ring-offset-2;
+  }
+
+  /* ─── Ghost Button ───────────────────────────────────────────── */
+  .btn-ghost {
+    @apply inline-flex items-center gap-3
+    border border-sanctuary-sage-mid text-sanctuary-brown-mid
+    px-8 py-4 rounded-full
+    font-sans font-medium text-sm tracking-wide
+    transition-all duration-300 ease-sanctuary
+    hover:border-sanctuary-sage hover:text-sanctuary-sage-dark hover:bg-sanctuary-sage-light/20
+    focus-visible:ring-2 focus-visible:ring-sanctuary-sage focus-visible:ring-offset-2;
+  }
+
+  /* ─── Section Wrapper ────────────────────────────────────────── */
+  .section-wrapper {
+    @apply px-6 sm:px-10 lg:px-16 xl:px-24 2xl:px-32;
+  }
+
+  /* ─── Divider ────────────────────────────────────────────────── */
+  .divider-sanctuary {
+    @apply w-12 h-px bg-sanctuary-sage-mid;
+  }
+}
+
+/* ─── Decorative Dot Pattern Background ─────────────────────────── */
+.bg-dot-pattern {
+  background-image: radial-gradient(circle, #b2ac8830 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* ─── Subtle Noise Texture ───────────────────────────────────────── */
+.bg-noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px 128px;
+  pointer-events: none;
+}
