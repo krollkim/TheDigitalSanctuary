@@ -16,7 +16,7 @@ interface FormState {
 type SubmitStatus = 'idle' | 'loading' | 'success' | 'error';
 
 // ─── Netlify URL Encoder ──────────────────────────────────────────────────────
-// Netlify Forms requires application/x-www-form-urlencoded — not JSON.
+// Netlify Forms requires application/x-www-form-urlencoded - not JSON.
 const encodeForNetlify = (data: Record<string, string>): string =>
   Object.entries(data)
     .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
@@ -110,7 +110,7 @@ function SuccessPanel() {
           ההודעה הגיעה אלינו בשלום
         </h3>
         <p className="body-balanced text-sanctuary-brown-mid text-sm sm:text-base max-w-xs mx-auto">
-          קראנו, שמענו, ונחזור אליכם בשקט — בדרך כלל תוך יום עסקי אחד.
+          קראנו, שמענו, ונחזור אליכם בשקט - בדרך כלל תוך יום עסקי אחד.
         </p>
       </motion.div>
     </motion.div>
@@ -224,7 +224,7 @@ export default function ContactForm() {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: encodeForNetlify({
           'form-name': 'contact',   // must match the form's name attribute
-          'bot-field':  '',          // honeypot — real users leave this empty
+          'bot-field':  '',          // honeypot - real users leave this empty
           name:         form.name,
           email:        form.email,
           role:         form.role,
@@ -331,7 +331,7 @@ export default function ContactForm() {
                 {/*
                   ── Netlify hidden fields ────────────────────────────────────
                   form-name: tells Netlify which inbox this submission belongs to.
-                  bot-field: the honeypot — bots fill it, humans don't see it.
+                  bot-field: the honeypot - bots fill it, humans don't see it.
                 */}
                 <input type="hidden" name="form-name" value="contact" />
                 <div className="hidden" aria-hidden="true">
@@ -419,7 +419,7 @@ export default function ContactForm() {
                 {/* Privacy note */}
                 <p className="font-sans text-xs text-sanctuary-brown-light leading-relaxed">
                   הפרטים שלכם מוגנים ולא יועברו לשום גורם שלישי. אנחנו מאמינים
-                  בפרטיות — גם בשלכם.
+                  בפרטיות - גם בשלכם.
                 </p>
 
                 {/* Submit */}

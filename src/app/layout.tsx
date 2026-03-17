@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     'מטפלים, פסיכולוגיה, אתר למטפל, קביעת תורים, בריאות הנפש, דיגיטל, טיפול נפשי',
   openGraph: {
     title: 'The Digital Sanctuary | פתרונות דיגיטליים למטפלים',
-    description: 'מרחב דיגיטלי שקט ובטוח — כי כל מטופל ראוי לחוויה מרגיעה.',
+    description: 'מרחב דיגיטלי שקט ובטוח - כי כל מטופל ראוי לחוויה מרגיעה.',
     type: 'website',
     locale: 'he_IL',
   },

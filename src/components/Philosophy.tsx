@@ -22,7 +22,7 @@ const cards = [
   {
     icon: Palette,
     title: 'צבעים שמרגיעים',
-    body: 'פלטת הגוונים החמים והאדמתיים שלנו אינה אסתטיקה בלבד — היא מבוססת על מחקר פסיכולוגי. גוונים אלו מפעילים את מערכת העצבים הפאראסימפתטית ומאפשרים נשימה.',
+    body: 'פלטת הגוונים החמים והאדמתיים שלנו אינה אסתטיקה בלבד - היא מבוססת על מחקר פסיכולוגי. גוונים אלו מפעילים את מערכת העצבים הפאראסימפתטית ומאפשרים נשימה.',
     accent: 'bg-sanctuary-clay/10 border-sanctuary-clay/30',
     iconBg: 'bg-sanctuary-clay/15',
     iconColor: 'text-sanctuary-brown-mid',
@@ -30,7 +30,7 @@ const cards = [
   {
     icon: MessageSquareHeart,
     title: 'מילים שמחבקות',
-    body: 'כל משפט, כל כפתור, כל כותרת — נכתבו בשפה שמפחיתה חרדה ומגבירה את הנכונות לפנות לעזרה. כי "צרו קשר" מרגיש אחרת מ"בואו נדבר."',
+    body: 'כל משפט, כל כפתור, כל כותרת - נכתבו בשפה שמפחיתה חרדה ומגבירה את הנכונות לפנות לעזרה. כי "צרו קשר" מרגיש אחרת מ"בואו נדבר."',
     accent: 'bg-sanctuary-warm/60 border-sanctuary-warm',
     iconBg: 'bg-sanctuary-sage-light/40',
     iconColor: 'text-sanctuary-sage-dark',
@@ -149,12 +149,12 @@ export default function Philosophy() {
             className="font-serif text-xl sm:text-2xl text-sanctuary-brown-mid
               font-light italic max-w-2xl mx-auto leading-relaxed"
           >
-            &ldquo;האתר שלך הוא חדר ההמתנה הדיגיטלי שלך — וכמו בחדר ההמתנה האמיתי,
+            &ldquo;האתר שלך הוא חדר ההמתנה הדיגיטלי שלך - וכמו בחדר ההמתנה האמיתי,
             כל פרט קטן שולח מסר למטופל.&rdquo;
           </p>
           <footer className="mt-4">
             <cite className="label-tag text-sanctuary-sage not-italic">
-              — הצוות שלנו, The Digital Sanctuary
+              - הצוות שלנו, The Digital Sanctuary
             </cite>
           </footer>
         </motion.blockquote>

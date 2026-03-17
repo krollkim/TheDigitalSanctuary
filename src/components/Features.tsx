@@ -17,7 +17,7 @@ const features = [
     id: 'booking',
     icon: CalendarCheck,
     title: 'תיאום תורים חלק',
-    body: 'מערכת קביעת תורים אוטומטית שמפחיתה חיכוך ומאפשרת למטופל לפנות לעזרה בדיוק ברגע שהוא מוכן — ללא שיחת טלפון, ללא אי-נוחות.',
+    body: 'מערכת קביעת תורים אוטומטית שמפחיתה חיכוך ומאפשרת למטופל לפנות לעזרה בדיוק ברגע שהוא מוכן - ללא שיחת טלפון, ללא אי-נוחות.',
     size: 'md:col-span-2 md:row-span-2',
     variant: 'large',
     iconSize: 28,
@@ -35,7 +35,7 @@ const features = [
     id: 'security',
     icon: ShieldCheck,
     title: 'אבטחה מלאה',
-    body: 'הגנה מקסימלית על נתוני המטופלים בהתאם לתקני האבטחה המחמירים ביותר. פרטיות היא לא אופציה — היא מחויבות.',
+    body: 'הגנה מקסימלית על נתוני המטופלים בהתאם לתקני האבטחה המחמירים ביותר. פרטיות היא לא אופציה - היא מחויבות.',
     size: 'md:col-span-1',
     variant: 'medium',
     iconSize: 22,
@@ -44,7 +44,7 @@ const features = [
     id: 'ux',
     icon: Brain,
     title: 'ממשק מרגיע',
-    body: 'חווית משתמש שתוכננה על ידי מומחים לבריאות הנפש — כל אלמנט, כל מרווח, כל צבע נבחר כדי להפחית חרדה.',
+    body: 'חווית משתמש שתוכננה על ידי מומחים לבריאות הנפש - כל אלמנט, כל מרווח, כל צבע נבחר כדי להפחית חרדה.',
     size: 'md:col-span-1',
     variant: 'medium',
     iconSize: 22,
@@ -53,7 +53,7 @@ const features = [
     id: 'support',
     icon: HeadphonesIcon,
     title: 'תמיכה טכנית 24/6',
-    body: 'אנחנו לצדכם בכל שלב — מהשקה, דרך עדכונים ועד לתחזוקה שוטפת.',
+    body: 'אנחנו לצדכם בכל שלב - מהשקה, דרך עדכונים ועד לתחזוקה שוטפת.',
     size: 'md:col-span-1',
     variant: 'medium',
     iconSize: 22,
@@ -62,7 +62,7 @@ const features = [
     id: 'analytics',
     icon: BarChart3,
     title: 'תובנות ואנליטיקס',
-    body: 'הבינו מי מבקר באתר שלכם ומה גורם להם לפנות — בדאשבורד פשוט ואינטואיטיבי.',
+    body: 'הבינו מי מבקר באתר שלכם ומה גורם להם לפנות - בדאשבורד פשוט ואינטואיטיבי.',
     size: 'md:col-span-1',
     variant: 'medium',
     iconSize: 22,
@@ -181,7 +181,7 @@ export default function Features() {
             variants={fadeUp}
             className="body-balanced text-base sm:text-lg text-sanctuary-brown-mid max-w-xl"
           >
-            כלים חכמים שמשרתים אתכם מאחורי הקלעים — ומשאירים את הבמה לקשר
+            כלים חכמים שמשרתים אתכם מאחורי הקלעים - ומשאירים את הבמה לקשר
             האנושי האמיתי.
           </motion.p>
         </motion.div>
