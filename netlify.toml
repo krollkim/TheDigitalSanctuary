@@ -1,0 +1,26 @@
+# ─── The Digital Sanctuary — Netlify Configuration ───────────────────────────
+
+[build]
+  command   = "npm run build"
+  publish   = ".next"
+
+# Next.js on Netlify requires the official adapter plugin.
+# Run once before deploying: npm install -D @netlify/plugin-nextjs
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# ─── Headers ─────────────────────────────────────────────────────────────────
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options        = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy        = "strict-origin-when-cross-origin"
+    Permissions-Policy     = "camera=(), microphone=(), geolocation=()"
+
+# ─── Redirects ────────────────────────────────────────────────────────────────
+# Catch-all: let Next.js handle all routing
+[[redirects]]
+  from   = "/*"
+  to     = "/.netlify/functions/___netlify-handler"
+  status = 200

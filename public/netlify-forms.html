@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Netlify Form Detection — The Digital Sanctuary</title>
+  </head>
+  <body>
+    <!--
+      This file exists solely to guarantee Netlify's build-time crawler
+      detects the "contact" form.
+
+      Next.js App Router pages are server-rendered, and Netlify's post-
+      processing pipeline may not reliably crawl the .next output. This
+      static HTML file in /public ensures the form is always discovered,
+      regardless of the rendering strategy.
+
+      The form attributes (name, data-netlify, data-netlify-honeypot)
+      MUST exactly match those in ContactForm.tsx.
+    -->
+    <form
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
+      hidden
+    >
+      <input type="hidden" name="form-name" value="contact" />
+      <input type="text"   name="bot-field" />
+      <input type="text"   name="name" />
+      <input type="email"  name="email" />
+      <select name="role">
+        <option value="psychologist">פסיכולוג/ית קלינית</option>
+        <option value="therapist">מטפל/ת בהבעה ויצירה</option>
+        <option value="social-worker">עובד/ת סוציאלי/ת</option>
+        <option value="psychiatrist">פסיכיאטר/ית</option>
+        <option value="clinic">מרפאה / מרכז טיפולי</option>
+        <option value="other">אחר</option>
+      </select>
+      <textarea name="message"></textarea>
+    </form>
+  </body>
+</html>

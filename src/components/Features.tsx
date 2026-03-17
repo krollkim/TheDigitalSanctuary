@@ -143,19 +143,6 @@ function FeatureCard({
           </p>
         </div>
 
-        {/* Large card extra CTA */}
-        {isLarge && (
-          <div className="mt-auto pt-4">
-            <span
-              className="inline-flex items-center gap-2
-                text-sanctuary-sage font-sans text-sm font-medium
-                group-hover:gap-3 transition-all duration-300"
-            >
-              <span>גלו עוד על המערכת</span>
-              <span aria-hidden="true" className="text-base">←</span>
-            </span>
-          </div>
-        )}
       </div>
     </motion.article>
   );

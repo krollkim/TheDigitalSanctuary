@@ -17,8 +17,8 @@ const footerLinks = {
     title: 'צרו קשר',
     items: [
       { label: 'טופס פנייה', href: '#contact' },
-      { label: 'info@digitalsanctuary.co.il', href: 'mailto:info@digitalsanctuary.co.il' },
-      { label: '050-000-0000', href: 'tel:+972500000000' },
+      { label: 'krollkimdev@gmail.com', href: 'mailto:krollkimdev@gmail.com' },
+      { label: '052-589-0252', href: 'tel:+972525890252' },
     ],
   },
 };

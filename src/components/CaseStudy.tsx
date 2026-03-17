@@ -17,8 +17,8 @@ const stats = [
   {
     value: 64,
     suffix: '%',
-    prefix: '-',
-    label: 'ירידה בשיעור הנטישה',
+    prefix: 'עד ',
+    label: 'שיפור פוטנציאלי בשיעור הנטישה',
     icon: TrendingDown,
     color: 'text-sanctuary-sage-dark',
     bg: 'bg-sanctuary-sage/10',
@@ -26,8 +26,8 @@ const stats = [
   {
     value: 180,
     suffix: '%',
-    prefix: '+',
-    label: 'גידול בפניות דרך האתר',
+    prefix: 'עד ',
+    label: 'שיפור פוטנציאלי בפניות דרך האתר',
     icon: TrendingUp,
     color: 'text-sanctuary-brown-mid',
     bg: 'bg-sanctuary-warm',
@@ -129,7 +129,7 @@ export default function CaseStudy() {
       label: 'האתגר',
       number: '01',
       heading: 'אתר שיצר יותר חרדה מאשר פתרה',
-      body: 'מרפאה פסיכולוגית בתל אביב עם רשימת המתנה ארוכה — אך אתר ישן, עמוס ולא מרגיע שגרם למטופלים פוטנציאליים לנטוש לפני שיצרו קשר. שיעור הנטישה עמד על 78%.',
+      body: 'מרפאה פסיכולוגית בתל אביב עם רשימת המתנה ארוכה — אך אתר ישן, עמוס ולא מרגיע שגרם למטופלים פוטנציאליים לנטוש לפני שיצרו קשר.',
     },
     {
       label: 'הגישה שלנו',
@@ -140,8 +140,8 @@ export default function CaseStudy() {
     {
       label: 'התוצאות',
       number: '03',
-      heading: 'מספרים שמדברים בעד עצמם',
-      body: 'תוך 90 יום מההשקה — ירידה דרמטית בנטישה, גידול משמעותי בפניות, ומטפלים שסוף סוף יכולים להתמקד בעבודה שלהם ולא בניהול לוח הזמנים.',
+      heading: 'פוטנציאל שינוי מוכח',
+      body: 'חוויה דיגיטלית נכונה יכולה להפוך אתר נטוש לאפיק הפניות המוביל של הפרקטיקה — ולאפשר למטפל להתמקד במה שחשוב באמת: הקשר עם המטופל.',
     },
   ];
 
@@ -233,7 +233,7 @@ export default function CaseStudy() {
           viewport={viewportOnce}
           className="grid grid-cols-1 sm:grid-cols-3 gap-5 lg:gap-6"
           role="list"
-          aria-label="נתוני הצלחה"
+          aria-label="השפעה פוטנציאלית"
         >
           {stats.map((stat) => {
             const Icon = stat.icon;

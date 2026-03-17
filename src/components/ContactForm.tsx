@@ -2,7 +2,7 @@
 
 import { useState, useId } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, CheckCircle2, Loader2 } from 'lucide-react';
+import { Send, CheckCircle2, Loader2, AlertCircle } from 'lucide-react';
 import { fadeUp, fadeIn, staggerContainer, viewportOnce } from '@/lib/animations';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -15,7 +15,14 @@ interface FormState {
 
 type SubmitStatus = 'idle' | 'loading' | 'success' | 'error';
 
-// ─── Form Field Component ─────────────────────────────────────────────────────
+// ─── Netlify URL Encoder ──────────────────────────────────────────────────────
+// Netlify Forms requires application/x-www-form-urlencoded — not JSON.
+const encodeForNetlify = (data: Record<string, string>): string =>
+  Object.entries(data)
+    .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
+    .join('&');
+
+// ─── Form Field Wrapper ───────────────────────────────────────────────────────
 function Field({
   label,
   id,
@@ -42,6 +49,7 @@ function Field({
             initial={{ opacity: 0, y: -4 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.25 }}
             className="font-sans text-xs text-red-500/80"
             role="alert"
           >
@@ -62,12 +70,107 @@ const inputClass = `
   transition-all duration-300
 `;
 
+// ─── Success State Panel ──────────────────────────────────────────────────────
+function SuccessPanel() {
+  return (
+    <motion.div
+      key="success"
+      initial={{ opacity: 0, scale: 0.96 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.96 }}
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      className="flex flex-col items-center text-center gap-6 py-12"
+      role="status"
+      aria-live="polite"
+    >
+      {/* Icon */}
+      <motion.div
+        initial={{ scale: 0.7, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ delay: 0.15, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="w-16 h-16 rounded-full bg-sanctuary-sage/12
+          border border-sanctuary-sage-light flex items-center justify-center"
+      >
+        <CheckCircle2
+          size={28}
+          className="text-sanctuary-sage-dark"
+          strokeWidth={1.5}
+          aria-hidden="true"
+        />
+      </motion.div>
+
+      {/* Copy */}
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.25, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="flex flex-col gap-3"
+      >
+        <h3 className="font-serif text-2xl text-sanctuary-brown font-normal">
+          ההודעה הגיעה אלינו בשלום
+        </h3>
+        <p className="body-balanced text-sanctuary-brown-mid text-sm sm:text-base max-w-xs mx-auto">
+          קראנו, שמענו, ונחזור אליכם בשקט — בדרך כלל תוך יום עסקי אחד.
+        </p>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+// ─── Error State Panel ────────────────────────────────────────────────────────
+function ErrorPanel({ onRetry }: { onRetry: () => void }) {
+  return (
+    <motion.div
+      key="error"
+      initial={{ opacity: 0, scale: 0.96 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.96 }}
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      className="flex flex-col items-center text-center gap-6 py-12"
+      role="alert"
+      aria-live="assertive"
+    >
+      {/* Icon */}
+      <div
+        className="w-16 h-16 rounded-full bg-sanctuary-warm border border-sanctuary-sage-light
+          flex items-center justify-center"
+      >
+        <AlertCircle
+          size={28}
+          className="text-sanctuary-brown-light"
+          strokeWidth={1.5}
+          aria-hidden="true"
+        />
+      </div>
+
+      {/* Copy */}
+      <div className="flex flex-col gap-3">
+        <h3 className="font-serif text-2xl text-sanctuary-brown font-normal">
+          משהו לא הלך כשורה
+        </h3>
+        <p className="body-balanced text-sanctuary-brown-mid text-sm sm:text-base max-w-xs mx-auto">
+          ההודעה לא נשלחה הפעם. ניתן לנסות שוב, או לפנות אלינו ישירות בטלפון.
+        </p>
+      </div>
+
+      {/* Retry */}
+      <button
+        onClick={onRetry}
+        className="btn-ghost text-sm px-6 py-3"
+        aria-label="נסו לשלוח שוב"
+      >
+        נסו שוב
+      </button>
+    </motion.div>
+  );
+}
+
 // ─── Section Component ────────────────────────────────────────────────────────
 export default function ContactForm() {
   const uid = useId();
-  const nameId = `${uid}-name`;
-  const emailId = `${uid}-email`;
-  const roleId = `${uid}-role`;
+  const nameId    = `${uid}-name`;
+  const emailId   = `${uid}-email`;
+  const roleId    = `${uid}-role`;
   const messageId = `${uid}-message`;
 
   const [form, setForm] = useState<FormState>({
@@ -76,39 +179,68 @@ export default function ContactForm() {
     role: '',
     message: '',
   });
-  const [errors, setErrors] = useState<Partial<FormState>>({});
-  const [status, setStatus] = useState<SubmitStatus>('idle');
+  const [errors, setErrors]   = useState<Partial<FormState>>({});
+  const [status, setStatus]   = useState<SubmitStatus>('idle');
 
+  // ─── Validation ─────────────────────────────────────────────────────────────
   const validate = (): boolean => {
     const next: Partial<FormState> = {};
-    if (!form.name.trim()) next.name = 'נא להזין שם מלא';
-    if (!form.email.trim()) next.email = 'נא להזין כתובת אימייל';
+    if (!form.name.trim())
+      next.name = 'נא להזין שם מלא';
+    if (!form.email.trim())
+      next.email = 'נא להזין כתובת אימייל';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
       next.email = 'כתובת אימייל אינה תקינה';
-    if (!form.message.trim()) next.message = 'נא לכתוב הודעה קצרה';
+    if (!form.message.trim())
+      next.message = 'נא לכתוב הודעה קצרה';
     setErrors(next);
     return Object.keys(next).length === 0;
   };
 
+  // ─── Field Change ────────────────────────────────────────────────────────────
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+    // Clear the individual field error on input
     if (errors[name as keyof FormState]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // ─── Submit → Netlify Forms ──────────────────────────────────────────────────
+  // Netlify detects the form via data-netlify="true" at build time.
+  // At runtime, we POST application/x-www-form-urlencoded to the page origin.
+  // The form-name field tells Netlify which form inbox to route the submission to.
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validate()) return;
     setStatus('loading');
-    // Simulate async submission — replace with your actual API call
-    await new Promise((r) => setTimeout(r, 1800));
-    setStatus('success');
+
+    try {
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: encodeForNetlify({
+          'form-name': 'contact',   // must match the form's name attribute
+          'bot-field':  '',          // honeypot — real users leave this empty
+          name:         form.name,
+          email:        form.email,
+          role:         form.role,
+          message:      form.message,
+        }),
+      });
+
+      if (!res.ok) throw new Error(`Netlify returned ${res.status}`);
+      setStatus('success');
+    } catch (err) {
+      console.error('[ContactForm] Netlify submission failed:', err);
+      setStatus('error');
+    }
   };
 
+  // ─── Render ──────────────────────────────────────────────────────────────────
   return (
     <section
       id="contact"
@@ -128,7 +260,8 @@ export default function ContactForm() {
       />
 
       <div className="section-wrapper max-w-3xl mx-auto relative z-10">
-        {/* ─── Header ───────────────────────────────────────────────────────── */}
+
+        {/* ─── Header ─────────────────────────────────────────────────────────── */}
         <motion.div
           variants={staggerContainer}
           initial="hidden"
@@ -152,12 +285,12 @@ export default function ContactForm() {
             variants={fadeUp}
             className="body-balanced text-base sm:text-lg text-sanctuary-brown-mid max-w-md"
           >
-            שיחה חופשית, ללא מחויבות וללא לחץ. ספרו לנו על הפרקטיקה שלכם ונחשוב
-            ביחד איך אנחנו יכולים לעזור.
+            שיחה חופשית, ללא מחויבות וללא לחץ. ספרו לנו על הפרקטיקה שלכם
+            ונחשוב ביחד איך אנחנו יכולים לעזור.
           </motion.p>
         </motion.div>
 
-        {/* ─── Form Card ────────────────────────────────────────────────────── */}
+        {/* ─── Form Card ──────────────────────────────────────────────────────── */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -167,45 +300,47 @@ export default function ContactForm() {
             shadow-sanctuary-md p-8 sm:p-12"
         >
           <AnimatePresence mode="wait">
-            {status === 'success' ? (
-              /* ─── Success State ─────────────────────────────────────────── */
-              <motion.div
-                key="success"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="flex flex-col items-center text-center gap-6 py-10"
-                role="status"
-                aria-live="polite"
-              >
-                <div className="w-16 h-16 rounded-full bg-sanctuary-sage/15 flex items-center justify-center">
-                  <CheckCircle2
-                    size={32}
-                    className="text-sanctuary-sage-dark"
-                    strokeWidth={1.5}
-                    aria-hidden="true"
-                  />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <h3 className="font-serif text-2xl text-sanctuary-brown font-normal">
-                    ההודעה נשלחה בהצלחה
-                  </h3>
-                  <p className="body-balanced text-sanctuary-brown-mid text-sm sm:text-base">
-                    תודה על פנייתכם. נחזור אליכם בתוך 24 שעות עסקיות.
-                  </p>
-                </div>
-              </motion.div>
-            ) : (
-              /* ─── Form State ────────────────────────────────────────────── */
+
+            {/* ── Success ────────────────────────────────────────────────────── */}
+            {status === 'success' && <SuccessPanel />}
+
+            {/* ── Error ──────────────────────────────────────────────────────── */}
+            {status === 'error' && (
+              <ErrorPanel onRetry={() => setStatus('idle')} />
+            )}
+
+            {/* ── Form (idle + loading) ───────────────────────────────────────── */}
+            {(status === 'idle' || status === 'loading') && (
               <motion.form
                 key="form"
-                initial={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, transition: { duration: 0.2 } }}
+                transition={{ duration: 0.35 }}
+                // ── Netlify detection attributes ──────────────────────────────
+                name="contact"
+                method="POST"
+                data-netlify="true"
+                data-netlify-honeypot="bot-field"
+                // ─────────────────────────────────────────────────────────────
                 onSubmit={handleSubmit}
                 noValidate
                 className="flex flex-col gap-6"
                 aria-label="טופס יצירת קשר"
               >
+                {/*
+                  ── Netlify hidden fields ────────────────────────────────────
+                  form-name: tells Netlify which inbox this submission belongs to.
+                  bot-field: the honeypot — bots fill it, humans don't see it.
+                */}
+                <input type="hidden" name="form-name" value="contact" />
+                <div className="hidden" aria-hidden="true">
+                  <label>
+                    שדה זה אינו למילוי:
+                    <input name="bot-field" tabIndex={-1} autoComplete="off" />
+                  </label>
+                </div>
+
                 {/* Row: Name + Email */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <Field label="שם מלא" id={nameId} error={errors.name}>
@@ -217,10 +352,10 @@ export default function ContactForm() {
                       placeholder="ד״ר ישראלי"
                       value={form.name}
                       onChange={handleChange}
-                      className={`${inputClass} ${errors.name ? 'border-red-300 focus:border-red-400 focus:ring-red-200' : ''}`}
+                      disabled={status === 'loading'}
+                      className={`${inputClass} ${errors.name ? 'border-red-300 focus:border-red-400 focus:ring-red-200' : ''} disabled:opacity-60`}
                       aria-required="true"
                       aria-invalid={!!errors.name}
-                      aria-describedby={errors.name ? `${nameId}-error` : undefined}
                     />
                   </Field>
                   <Field label="כתובת אימייל" id={emailId} error={errors.email}>
@@ -232,7 +367,8 @@ export default function ContactForm() {
                       placeholder="doctor@clinic.co.il"
                       value={form.email}
                       onChange={handleChange}
-                      className={`${inputClass} ${errors.email ? 'border-red-300 focus:border-red-400 focus:ring-red-200' : ''}`}
+                      disabled={status === 'loading'}
+                      className={`${inputClass} ${errors.email ? 'border-red-300 focus:border-red-400 focus:ring-red-200' : ''} disabled:opacity-60`}
                       aria-required="true"
                       aria-invalid={!!errors.email}
                     />
@@ -246,12 +382,11 @@ export default function ContactForm() {
                     name="role"
                     value={form.role}
                     onChange={handleChange}
-                    className={`${inputClass} cursor-pointer`}
+                    disabled={status === 'loading'}
+                    className={`${inputClass} cursor-pointer disabled:opacity-60`}
                     aria-label="בחרו סוג פרקטיקה"
                   >
-                    <option value="" disabled>
-                      בחרו סוג פרקטיקה...
-                    </option>
+                    <option value="" disabled>בחרו סוג פרקטיקה...</option>
                     <option value="psychologist">פסיכולוג/ית קלינית</option>
                     <option value="therapist">מטפל/ת בהבעה ויצירה</option>
                     <option value="social-worker">עובד/ת סוציאלי/ת</option>
@@ -262,7 +397,11 @@ export default function ContactForm() {
                 </Field>
 
                 {/* Message */}
-                <Field label="ספרו לנו קצת על עצמכם" id={messageId} error={errors.message}>
+                <Field
+                  label="ספרו לנו קצת על עצמכם"
+                  id={messageId}
+                  error={errors.message}
+                >
                   <textarea
                     id={messageId}
                     name="message"
@@ -270,7 +409,8 @@ export default function ContactForm() {
                     placeholder="אנחנו מרפאה קטנה בתל אביב, יש לנו אתר ישן שלא משקף את הערכים שלנו..."
                     value={form.message}
                     onChange={handleChange}
-                    className={`${inputClass} resize-none ${errors.message ? 'border-red-300 focus:border-red-400 focus:ring-red-200' : ''}`}
+                    disabled={status === 'loading'}
+                    className={`${inputClass} resize-none ${errors.message ? 'border-red-300 focus:border-red-400 focus:ring-red-200' : ''} disabled:opacity-60`}
                     aria-required="true"
                     aria-invalid={!!errors.message}
                   />
@@ -286,33 +426,34 @@ export default function ContactForm() {
                 <button
                   type="submit"
                   disabled={status === 'loading'}
-                  className="btn-primary self-center sm:self-start min-w-[180px]
+                  className="btn-primary self-center sm:self-start min-w-[200px]
                     justify-center disabled:opacity-70 disabled:cursor-not-allowed
                     disabled:hover:translate-y-0"
-                  aria-label="שליחת הפנייה"
+                  aria-label={status === 'loading' ? 'שולח הודעה, נא להמתין' : 'שליחת הפנייה'}
                 >
                   {status === 'loading' ? (
                     <>
                       <Loader2
-                        size={16}
+                        size={15}
                         className="animate-spin"
                         aria-hidden="true"
                       />
-                      <span>שולח...</span>
+                      <span>שולח בשקט...</span>
                     </>
                   ) : (
                     <>
-                      <Send size={16} strokeWidth={1.5} aria-hidden="true" />
+                      <Send size={15} strokeWidth={1.5} aria-hidden="true" />
                       <span>שלחו הודעה</span>
                     </>
                   )}
                 </button>
               </motion.form>
             )}
+
           </AnimatePresence>
         </motion.div>
 
-        {/* ─── Alternative Contact ──────────────────────────────────────────── */}
+        {/* ─── Alternative Contact ────────────────────────────────────────────── */}
         <motion.p
           variants={fadeIn}
           initial="hidden"
@@ -322,13 +463,24 @@ export default function ContactForm() {
         >
           מעדיפים לדבר?{' '}
           <a
-            href="tel:+972500000000"
+            href="tel:+972525890252"
             className="text-sanctuary-sage-dark underline underline-offset-2
               hover:text-sanctuary-sage transition-colors duration-200"
           >
-            050-000-0000
+            052-589-0252
+          </a>
+          {' '}או{' '}
+          <a
+            href="https://wa.me/972525890252"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sanctuary-sage-dark underline underline-offset-2
+              hover:text-sanctuary-sage transition-colors duration-200"
+          >
+            WhatsApp
           </a>
         </motion.p>
+
       </div>
     </section>
   );

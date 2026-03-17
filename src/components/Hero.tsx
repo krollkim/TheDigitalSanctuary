@@ -169,9 +169,9 @@ export default function Hero() {
               pt-4 text-sanctuary-brown-light"
           >
             {[
-              { value: '+120', label: 'מטפלים פעילים' },
-              { value: '98%', label: 'שביעות רצון' },
-              { value: '48h', label: 'זמן השקה' },
+              { value: 'התאמה', label: 'אישית מלאה' },
+              { value: 'ליווי', label: 'צמוד מקצה לקצה' },
+              { value: 'פיתוח', label: 'מהיר ומדויק' },
             ].map((stat) => (
               <div key={stat.label} className="flex flex-col items-center gap-1">
                 <span className="font-serif text-2xl text-sanctuary-brown font-normal">
