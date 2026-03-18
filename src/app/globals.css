@@ -103,6 +103,30 @@ html {
   }
 }
 
+/* ─── Accessibility Classes ──────────────────────────────────────── */
+
+/* Large text: scale the root font size by ~12.5% */
+html.a11y-large-text {
+  font-size: 112.5%;
+}
+
+/* High contrast: filter targets <main> only.
+   The AccessibilityWidget lives as a sibling of <main> inside <body>,
+   so it is never inside the filtered subtree and is never affected. */
+html.a11y-high-contrast main {
+  filter: contrast(1.6) saturate(0.85);
+}
+
+/* Reduce motion: disable ALL animations, transitions, and scroll smoothing */
+html.a11y-reduce-motion *,
+html.a11y-reduce-motion *::before,
+html.a11y-reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
 /* ─── Decorative Dot Pattern Background ─────────────────────────── */
 .bg-dot-pattern {
   background-image: radial-gradient(circle, #b2ac8830 1px, transparent 1px);

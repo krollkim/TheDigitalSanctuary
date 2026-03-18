@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /_next/
+Disallow: /api/
+
+# Legal / utility pages — allow crawling but low priority
+Allow: /privacy
+Allow: /terms
+Allow: /accessibility
+
+Sitemap: https://thedigitalsanctuary.netlify.app/sitemap.xml

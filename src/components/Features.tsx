@@ -18,7 +18,7 @@ const features = [
     icon: CalendarCheck,
     title: 'תיאום תורים חלק',
     body: 'מערכת קביעת תורים אוטומטית שמפחיתה חיכוך ומאפשרת למטופל לפנות לעזרה בדיוק ברגע שהוא מוכן - ללא שיחת טלפון, ללא אי-נוחות.',
-    size: 'md:col-span-2 md:row-span-2',
+    size: 'md:col-span-2',
     variant: 'large',
     iconSize: 28,
   },
@@ -63,9 +63,9 @@ const features = [
     icon: BarChart3,
     title: 'תובנות ואנליטיקס',
     body: 'הבינו מי מבקר באתר שלכם ומה גורם להם לפנות - בדאשבורד פשוט ואינטואיטיבי.',
-    size: 'md:col-span-1',
-    variant: 'medium',
-    iconSize: 22,
+    size: 'md:col-span-3',
+    variant: 'large',
+    iconSize: 28,
   },
 ];
 

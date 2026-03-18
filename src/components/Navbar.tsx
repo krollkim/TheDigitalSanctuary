@@ -9,7 +9,8 @@ const navItems = [
   { label: 'הפילוסופיה שלנו', href: '#philosophy' },
   { label: 'כלים ותכונות', href: '#features' },
   { label: 'מקרי לקוח', href: '#case-study' },
-  { label: 'צרו קשר', href: '#contact' },
+  { label: 'התהליך שלנו', href: '#process' },
+  { label: 'בואו נדבר', href: '#contact' },
 ];
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -98,7 +99,7 @@ export default function Navbar() {
                 onClick={(e) => handleNavClick(e, '#contact')}
                 className="btn-primary text-sm px-6 py-3"
               >
-                <span>התחילו עכשיו</span>
+                <span>בואו נדבר</span>
               </a>
             </div>
 
@@ -151,7 +152,7 @@ export default function Navbar() {
                   onClick={(e) => handleNavClick(e, '#contact')}
                   className="btn-primary w-full justify-center"
                 >
-                  התחילו עכשיו
+                  בואו נדבר
                 </a>
               </div>
             </div>

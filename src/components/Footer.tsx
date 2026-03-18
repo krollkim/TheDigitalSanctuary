@@ -136,14 +136,14 @@ export default function Footer() {
           </p>
           <div className="flex items-center gap-6">
             <a
-              href="#"
+              href="/privacy"
               className="font-sans text-xs text-sanctuary-beige/30
                 hover:text-sanctuary-beige/60 transition-colors duration-200"
             >
               מדיניות פרטיות
             </a>
             <a
-              href="#"
+              href="/terms"
               className="font-sans text-xs text-sanctuary-beige/30
                 hover:text-sanctuary-beige/60 transition-colors duration-200"
             >

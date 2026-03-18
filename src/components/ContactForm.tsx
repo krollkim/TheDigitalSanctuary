@@ -2,7 +2,7 @@
 
 import { useState, useId } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, CheckCircle2, Loader2, AlertCircle } from 'lucide-react';
+import { Send, CheckCircle2, Loader2, AlertCircle, Lock } from 'lucide-react';
 import { fadeUp, fadeIn, staggerContainer, viewportOnce } from '@/lib/animations';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -288,6 +288,18 @@ export default function ContactForm() {
             שיחה חופשית, ללא מחויבות וללא לחץ. ספרו לנו על הפרקטיקה שלכם
             ונחשוב ביחד איך אנחנו יכולים לעזור.
           </motion.p>
+
+          {/* ── Trust signal ────────────────────────────────────────────── */}
+          <motion.div
+            variants={fadeIn}
+            className="flex items-center gap-1.5 text-sanctuary-sage-dark"
+            aria-label="אבטחת מידע"
+          >
+            <Lock size={12} strokeWidth={2} aria-hidden="true" />
+            <span className="font-sans text-xs tracking-wide">
+              כל הפרטים מוצפנים ומאובטחים
+            </span>
+          </motion.div>
         </motion.div>
 
         {/* ─── Form Card ──────────────────────────────────────────────────────── */}
