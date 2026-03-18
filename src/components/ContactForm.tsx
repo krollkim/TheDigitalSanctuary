@@ -15,12 +15,6 @@ interface FormState {
 
 type SubmitStatus = 'idle' | 'loading' | 'success' | 'error';
 
-// ─── Netlify URL Encoder ──────────────────────────────────────────────────────
-// Netlify Forms requires application/x-www-form-urlencoded - not JSON.
-const encodeForNetlify = (data: Record<string, string>): string =>
-  Object.entries(data)
-    .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
-    .join('&');
 
 // ─── Form Field Wrapper ───────────────────────────────────────────────────────
 function Field({
@@ -219,20 +213,19 @@ export default function ContactForm() {
     setStatus('loading');
 
     try {
-      const res = await fetch('/', {
+      const res = await fetch('/api/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encodeForNetlify({
-          'form-name': 'contact',   // must match the form's name attribute
-          'bot-field':  '',          // honeypot - real users leave this empty
-          name:         form.name,
-          email:        form.email,
-          role:         form.role,
-          message:      form.message,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name:        form.name,
+          email:       form.email,
+          role:        form.role,
+          message:     form.message,
+          'bot-field': '',
         }),
       });
 
-      if (!res.ok) throw new Error(`Netlify returned ${res.status}`);
+      if (!res.ok) throw new Error(`Contact API returned ${res.status}`);
       setStatus('success');
     } catch (err) {
       console.error('[ContactForm] Netlify submission failed:', err);
@@ -329,23 +322,12 @@ export default function ContactForm() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0, transition: { duration: 0.2 } }}
                 transition={{ duration: 0.35 }}
-                // ── Netlify detection attributes ──────────────────────────────
-                name="contact"
-                method="POST"
-                data-netlify="true"
-                data-netlify-honeypot="bot-field"
-                // ─────────────────────────────────────────────────────────────
                 onSubmit={handleSubmit}
                 noValidate
                 className="flex flex-col gap-6"
                 aria-label="טופס יצירת קשר"
               >
-                {/*
-                  ── Netlify hidden fields ────────────────────────────────────
-                  form-name: tells Netlify which inbox this submission belongs to.
-                  bot-field: the honeypot - bots fill it, humans don't see it.
-                */}
-                <input type="hidden" name="form-name" value="contact" />
+                {/* Honeypot — hidden from real users, bots fill it */}
                 <div className="hidden" aria-hidden="true">
                   <label>
                     שדה זה אינו למילוי:
