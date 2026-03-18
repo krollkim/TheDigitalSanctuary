@@ -11,7 +11,7 @@ const steps = [
     icon: MessageCircle,
     label: 'שיחת גילוי',
     title: 'מכירים אתכם לפני שמתחילים',
-    body: 'שיחה קצרה ללא מחויבות. אנחנו שואלים, מקשיבים, ומבינים את הפרקטיקה, הערכים, והמטופלים שלכם — לפני שמזיזים פיקסל אחד.',
+    body: 'שיחה קצרה ללא מחויבות. אנחנו שואלים, מקשיבים, ומבינים את הפרקטיקה, הערכים, והמטופלים שלכם - לפני שמזיזים פיקסל אחד.',
     accent: 'bg-white border-sanctuary-sage-light',
     iconBg: 'bg-sanctuary-sage/12',
     iconColor: 'text-sanctuary-sage-dark',
@@ -25,7 +25,7 @@ const steps = [
     icon: Palette,
     label: 'עיצוב מותאם אישית',
     title: 'בונים את המרחב שלכם מאפס',
-    body: 'אין תבניות. אין קיצורי דרך. כל החלטת עיצוב, כותרת, ומבנה עמוד מתקבלת דרך שאלה אחת: "האם זה גורם למטופל להרגיש בטוח?" אנחנו בונים חוויה דיגיטלית שמשקפת אתכם בדיוק — את הערכים, הגישה הטיפולית, והאנשים שאתם עוזרים להם.',
+    body: 'אין תבניות. אין קיצורי דרך. כל החלטת עיצוב, כותרת, ומבנה עמוד מתקבלת דרך שאלה אחת: "האם זה גורם למטופל להרגיש בטוח?" אנחנו בונים חוויה דיגיטלית שמשקפת אתכם בדיוק - את הערכים, הגישה הטיפולית, והאנשים שאתם עוזרים להם.',
     accent: 'bg-white border-sanctuary-warm',
     iconBg: 'bg-sanctuary-warm',
     iconColor: 'text-sanctuary-brown-mid',
@@ -142,7 +142,7 @@ export default function Process() {
           })}
         </motion.div>
 
-        {/* ─── Step 03 — Full-width Launch card ────────────────────────────── */}
+        {/* ─── Step 03 - Full-width Launch card ────────────────────────────── */}
         <motion.article
           variants={slideFromEnd}
           initial="hidden"
@@ -183,10 +183,10 @@ export default function Process() {
               </div>
               <div className="flex flex-col gap-2">
                 <h3 className="font-serif text-2xl sm:text-3xl text-sanctuary-beige font-normal">
-                  השקה וליווי — ואנחנו לא נעלמים
+                  השקה וליווי - ואנחנו לא נעלמים
                 </h3>
                 <p className="body-balanced text-sm sm:text-base text-sanctuary-beige/60 leading-relaxed max-w-lg">
-                  מקבלים אתר חי, מהיר ומוכן לאפיק פניות. אחרי ההשקה — אנחנו
+                  מקבלים אתר חי, מהיר ומוכן לאפיק פניות. אחרי ההשקה - אנחנו
                   שותפים לדרך: תמיכה שוטפת, עדכונים, ושיפורים שנבנים עם הפרקטיקה שלכם.
                 </p>
               </div>
