@@ -1,6 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap';
 import {
   CalendarCheck,
   Smartphone,
@@ -9,7 +10,6 @@ import {
   HeadphonesIcon,
   BarChart3,
 } from 'lucide-react';
-import { fadeUp, fadeIn, staggerContainer, viewportOnce } from '@/lib/animations';
 
 // ─── Feature Data ─────────────────────────────────────────────────────────────
 const features = [
@@ -70,22 +70,14 @@ const features = [
 ];
 
 // ─── Single Feature Card ──────────────────────────────────────────────────────
-function FeatureCard({
-  feature,
-  index,
-}: {
-  feature: (typeof features)[0];
-  index: number;
-}) {
+function FeatureCard({ feature }: { feature: (typeof features)[0] }) {
   const Icon = feature.icon;
   const isLarge = feature.variant === 'large';
 
   return (
-    <motion.article
-      variants={fadeUp}
-      custom={index}
-      whileHover={{ y: -4, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } }}
+    <article
       className={`
+        feat-card
         ${feature.size}
         relative group
         bg-white border border-sanctuary-sage-light
@@ -93,6 +85,7 @@ function FeatureCard({
         shadow-sanctuary hover:shadow-sanctuary-md
         transition-all duration-500 overflow-hidden
         flex flex-col
+        hover:-translate-y-1
         ${isLarge ? 'min-h-[280px] sm:min-h-[320px]' : 'min-h-[180px] sm:min-h-[200px]'}
       `}
       aria-label={feature.title}
@@ -142,63 +135,81 @@ function FeatureCard({
             {feature.body}
           </p>
         </div>
-
       </div>
-    </motion.article>
+    </article>
   );
 }
 
 // ─── Section Component ────────────────────────────────────────────────────────
 export default function Features() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    const el = sectionRef.current!;
+
+    // Section header — single trigger for the whole header block
+    gsap.from(el.querySelectorAll('.feat-header > *'), {
+      opacity: 0,
+      y: 20,
+      duration: 0.7,
+      ease: 'power3.out',
+      stagger: 0.1,
+      force3D: true,
+      scrollTrigger: { trigger: el, start: 'top 78%' },
+    });
+
+    // Bento cards — per-element trigger via batch so each row animates
+    // when it individually enters the viewport (matches Framer whileInView)
+    ScrollTrigger.batch(el.querySelectorAll('.feat-card'), {
+      onEnter: (elements) => {
+        gsap.from(elements, {
+          opacity: 0,
+          y: 24,
+          duration: 0.75,
+          ease: 'power3.out',
+          stagger: 0.08,
+          force3D: true,
+        });
+      },
+      start: 'top 88%',
+      once: true,
+    });
+  }, { scope: sectionRef });
+
   return (
     <section
+      ref={sectionRef}
       id="features"
       className="py-28 sm:py-36 bg-sanctuary-off-white"
       aria-labelledby="features-heading"
     >
       <div className="section-wrapper max-w-7xl mx-auto">
         {/* ─── Header ───────────────────────────────────────────────────────── */}
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOnce}
-          className="flex flex-col items-center text-center gap-5 mb-14 sm:mb-16"
-        >
-          <motion.span variants={fadeIn} className="label-tag text-sanctuary-sage">
-            כלים ותכונות
-          </motion.span>
-          <motion.h2
+        <div className="feat-header flex flex-col items-center text-center gap-5 mb-14 sm:mb-16">
+          <span className="label-tag text-sanctuary-sage">כלים ותכונות</span>
+          <h2
             id="features-heading"
-            variants={fadeUp}
             className="heading-section text-3xl sm:text-4xl lg:text-5xl
               text-sanctuary-brown max-w-2xl"
           >
             טכנולוגיה שנעלמת ברקע
-          </motion.h2>
-          <motion.div variants={fadeIn} className="divider-sanctuary" aria-hidden="true" />
-          <motion.p
-            variants={fadeUp}
-            className="body-balanced text-base sm:text-lg text-sanctuary-brown-mid max-w-xl"
-          >
+          </h2>
+          <div className="divider-sanctuary" aria-hidden="true" />
+          <p className="body-balanced text-base sm:text-lg text-sanctuary-brown-mid max-w-xl">
             כלים חכמים שמשרתים אתכם מאחורי הקלעים - ומשאירים את הבמה לקשר
             האנושי האמיתי.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         {/* ─── Bento Grid ───────────────────────────────────────────────────── */}
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOnce}
+        <div
           className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6
             auto-rows-[minmax(0,auto)]"
         >
-          {features.map((feature, i) => (
-            <FeatureCard key={feature.id} feature={feature} index={i} />
+          {features.map((feature) => (
+            <FeatureCard key={feature.id} feature={feature} />
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

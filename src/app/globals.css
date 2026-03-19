@@ -133,6 +133,23 @@ html.a11y-reduce-motion *::after {
   background-size: 28px 28px;
 }
 
+/* ─── GSAP Animation Keyframes ──────────────────────────────────────────── */
+@keyframes gsapPanelIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes gsapFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.anim-panel-in {
+  animation: gsapPanelIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.anim-fade-in {
+  animation: gsapFadeIn 0.35s ease-out both;
+}
+
 /* ─── Subtle Noise Texture ───────────────────────────────────────── */
 .bg-noise::after {
   content: '';

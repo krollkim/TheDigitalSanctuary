@@ -1,8 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { gsap, useGSAP } from '@/lib/gsap';
 import { ArrowDown, Sparkles } from 'lucide-react';
-import { fadeUp, fadeIn, staggerContainer, scaleFade, viewportOnce } from '@/lib/animations';
 
 // ─── Decorative Blobs ─────────────────────────────────────────────────────────
 const blobs = [
@@ -25,47 +25,54 @@ const blobs = [
 
 // ─── Floating Abstract Shapes ─────────────────────────────────────────────────
 const floatingShapes = [
-  {
-    size: 'w-3 h-3 sm:w-4 sm:h-4',
-    pos: 'top-1/3 end-[12%] sm:end-[18%]',
-    delay: '0s',
-    opacity: 'opacity-40',
-  },
-  {
-    size: 'w-2 h-2',
-    pos: 'top-2/3 start-[15%]',
-    delay: '1.2s',
-    opacity: 'opacity-30',
-  },
-  {
-    size: 'w-5 h-5 sm:w-6 sm:h-6',
-    pos: 'bottom-1/3 end-[22%] sm:end-[30%]',
-    delay: '2.4s',
-    opacity: 'opacity-20',
-  },
+  { size: 'w-3 h-3 sm:w-4 sm:h-4', pos: 'top-1/3 end-[12%] sm:end-[18%]', delay: '0s',   opacity: 'opacity-40' },
+  { size: 'w-2 h-2',               pos: 'top-2/3 start-[15%]',             delay: '1.2s', opacity: 'opacity-30' },
+  { size: 'w-5 h-5 sm:w-6 sm:h-6', pos: 'bottom-1/3 end-[22%] sm:end-[30%]', delay: '2.4s', opacity: 'opacity-20' },
 ];
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function Hero() {
+  const heroRef = useRef<HTMLElement>(null);
+  const scrollBtnRef = useRef<HTMLButtonElement>(null);
+
   const handleScrollDown = () => {
-    const next = document.querySelector('#philosophy');
-    if (next) next.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.querySelector('#philosophy')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
+
+  // Mount entrance — no ScrollTrigger (above the fold)
+  useGSAP(() => {
+    const el = heroRef.current!;
+
+    // Stagger all content items in sequence
+    gsap.from(el.querySelectorAll('.hero-item'), {
+      opacity: 0,
+      y: 20,
+      duration: 0.75,
+      ease: 'power3.out',
+      stagger: 0.12,
+      force3D: true,
+    });
+
+    // Scroll arrow — delayed fade in
+    gsap.from(scrollBtnRef.current, {
+      opacity: 0,
+      duration: 0.8,
+      delay: 1.5,
+      ease: 'power2.out',
+    });
+  }, { scope: heroRef });
 
   return (
     <section
+      ref={heroRef}
       className="relative min-h-screen flex flex-col justify-center overflow-hidden
         bg-sanctuary-off-white bg-dot-pattern"
       aria-label="אזור ראשי"
     >
       {/* ─── Background Blobs ──────────────────────────────────────────────── */}
       {blobs.map((blob, i) => (
-        <motion.div
+        <div
           key={i}
-          variants={scaleFade}
-          initial="hidden"
-          animate="visible"
-          transition={{ delay: i * 0.3, duration: 1.4, ease: 'easeOut' }}
           className={blob.className}
           style={blob.style}
           aria-hidden="true"
@@ -85,14 +92,10 @@ export default function Hero() {
 
       {/* ─── Main Content ──────────────────────────────────────────────────── */}
       <div className="relative z-10 section-wrapper max-w-6xl mx-auto py-32 sm:py-40">
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
-          className="flex flex-col items-center text-center gap-8"
-        >
+        <div className="flex flex-col items-center text-center gap-8">
+
           {/* ─── Label Tag ───────────────────────────────────────────────────── */}
-          <motion.div variants={fadeIn}>
+          <div className="hero-item">
             <span
               className="inline-flex items-center gap-2 label-tag text-sanctuary-sage
               bg-sanctuary-sage/10 border border-sanctuary-sage-light
@@ -101,12 +104,11 @@ export default function Hero() {
               <Sparkles size={11} strokeWidth={2} aria-hidden="true" />
               <span>פתרונות דיגיטלי לפרקטיקות טיפוליות</span>
             </span>
-          </motion.div>
+          </div>
 
           {/* ─── Main Headline ────────────────────────────────────────────────── */}
-          <motion.h1
-            variants={fadeUp}
-            className="heading-display text-4xl sm:text-6xl lg:text-7xl xl:text-8xl
+          <h1
+            className="hero-item heading-display text-4xl sm:text-6xl lg:text-7xl xl:text-8xl
               text-sanctuary-brown max-w-4xl"
           >
             מרחב דיגיטלי.{' '}
@@ -119,30 +121,24 @@ export default function Hero() {
               />
             </span>{' '}
             אמיתי.
-          </motion.h1>
+          </h1>
 
           {/* ─── Subheadline ──────────────────────────────────────────────────── */}
-          <motion.p
-            variants={fadeUp}
-            className="body-balanced text-base sm:text-lg lg:text-xl
+          <p
+            className="hero-item body-balanced text-base sm:text-lg lg:text-xl
               text-sanctuary-brown-mid max-w-2xl"
           >
             הפתרון הדיגיטלי שמטפלים בוחרים כשהם רוצים שהמטופל שלהם ירגיש בטוח
             עוד לפני שנכנס לחדר - כי נוכחות דיגיטלית שקטה היא חלק מהטיפול.
-          </motion.p>
+          </p>
 
           {/* ─── CTA Buttons ──────────────────────────────────────────────────── */}
-          <motion.div
-            variants={fadeUp}
-            className="flex flex-col sm:flex-row items-center gap-4 pt-2"
-          >
+          <div className="hero-item flex flex-col sm:flex-row items-center gap-4 pt-2">
             <a
               href="#contact"
               onClick={(e) => {
                 e.preventDefault();
-                document
-                  .querySelector('#contact')
-                  ?.scrollIntoView({ behavior: 'smooth' });
+                document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
               }}
               className="btn-primary"
             >
@@ -152,20 +148,17 @@ export default function Hero() {
               href="#philosophy"
               onClick={(e) => {
                 e.preventDefault();
-                document
-                  .querySelector('#philosophy')
-                  ?.scrollIntoView({ behavior: 'smooth' });
+                document.querySelector('#philosophy')?.scrollIntoView({ behavior: 'smooth' });
               }}
               className="btn-ghost"
             >
               <span>גלו עוד</span>
             </a>
-          </motion.div>
+          </div>
 
           {/* ─── Trust Indicators ─────────────────────────────────────────────── */}
-          <motion.div
-            variants={fadeIn}
-            className="flex flex-col sm:flex-row items-center gap-6 sm:gap-10
+          <div
+            className="hero-item flex flex-col sm:flex-row items-center gap-6 sm:gap-10
               pt-4 text-sanctuary-brown-light"
           >
             {[
@@ -182,15 +175,13 @@ export default function Hero() {
                 </span>
               </div>
             ))}
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
 
       {/* ─── Scroll Indicator ──────────────────────────────────────────────────── */}
-      <motion.button
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.8 }}
+      <button
+        ref={scrollBtnRef}
         onClick={handleScrollDown}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10
           flex flex-col items-center gap-2 text-sanctuary-brown-light
@@ -200,14 +191,10 @@ export default function Hero() {
         aria-label="גלול למטה"
       >
         <span className="label-tag text-[10px]">גלילה</span>
-        <motion.div
-          animate={{ y: [0, 5, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-          className="group-hover:text-sanctuary-sage"
-        >
+        <div className="animate-bounce group-hover:text-sanctuary-sage">
           <ArrowDown size={16} strokeWidth={1.5} aria-hidden="true" />
-        </motion.div>
-      </motion.button>
+        </div>
+      </button>
     </section>
   );
 }

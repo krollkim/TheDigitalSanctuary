@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { gsap, useGSAP } from '@/lib/gsap';
 import { Menu, X } from 'lucide-react';
 
 // ─── Navigation Items ─────────────────────────────────────────────────────────
@@ -17,12 +17,51 @@ const navItems = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
+  // Scroll listener
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 24);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Header entrance on mount
+  useGSAP(() => {
+    gsap.from(headerRef.current, {
+      opacity: 0,
+      y: -16,
+      duration: 0.7,
+      ease: 'power3.out',
+      force3D: true,
+    });
+  }, { scope: headerRef });
+
+  // Mobile menu: open / close
+  useEffect(() => {
+    const el = menuRef.current;
+    if (!el) return;
+    gsap.killTweensOf(el);
+
+    if (mobileOpen) {
+      gsap.set(el, { display: 'block' });
+      gsap.fromTo(
+        el,
+        { opacity: 0, y: -8 },
+        { opacity: 1, y: 0, duration: 0.25, ease: 'power2.out', force3D: true }
+      );
+    } else {
+      gsap.to(el, {
+        opacity: 0,
+        y: -8,
+        duration: 0.2,
+        ease: 'power2.in',
+        force3D: true,
+        onComplete: () => { gsap.set(el, { display: 'none' }); },
+      });
+    }
+  }, [mobileOpen]);
 
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -30,18 +69,13 @@ export default function Navbar() {
   ) => {
     e.preventDefault();
     setMobileOpen(false);
-    const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
     <>
-      <motion.header
-        initial={{ opacity: 0, y: -16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      <header
+        ref={headerRef}
         className={`
           fixed top-0 inset-x-0 z-50 transition-all duration-500
           ${scrolled
@@ -117,48 +151,42 @@ export default function Navbar() {
             </button>
           </nav>
         </div>
-      </motion.header>
+      </header>
 
       {/* ─── Mobile Menu Overlay ──────────────────────────────────────────────── */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            id="mobile-menu"
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="fixed top-18 inset-x-0 z-40 bg-sanctuary-off-white/95 backdrop-blur-md
-              border-b border-sanctuary-sage-light shadow-sanctuary-md lg:hidden"
-            role="navigation"
-            aria-label="תפריט נייד"
-          >
-            <div className="section-wrapper py-6 flex flex-col gap-1">
-              {navItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  className="font-sans text-base font-light text-sanctuary-brown-mid
-                    hover:text-sanctuary-brown hover:bg-sanctuary-beige/60
-                    py-3 px-4 rounded-xl transition-all duration-200 block"
-                >
-                  {item.label}
-                </a>
-              ))}
-              <div className="pt-3 border-t border-sanctuary-sage-light mt-2">
-                <a
-                  href="#contact"
-                  onClick={(e) => handleNavClick(e, '#contact')}
-                  className="btn-primary w-full justify-center"
-                >
-                  בואו נדבר
-                </a>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div
+        ref={menuRef}
+        id="mobile-menu"
+        style={{ display: 'none' }}
+        className="fixed top-18 inset-x-0 z-40 bg-sanctuary-off-white/95 backdrop-blur-md
+          border-b border-sanctuary-sage-light shadow-sanctuary-md lg:hidden"
+        role="navigation"
+        aria-label="תפריט נייד"
+      >
+        <div className="section-wrapper py-6 flex flex-col gap-1">
+          {navItems.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              onClick={(e) => handleNavClick(e, item.href)}
+              className="font-sans text-base font-light text-sanctuary-brown-mid
+                hover:text-sanctuary-brown hover:bg-sanctuary-beige/60
+                py-3 px-4 rounded-xl transition-all duration-200 block"
+            >
+              {item.label}
+            </a>
+          ))}
+          <div className="pt-3 border-t border-sanctuary-sage-light mt-2">
+            <a
+              href="#contact"
+              onClick={(e) => handleNavClick(e, '#contact')}
+              className="btn-primary w-full justify-center"
+            >
+              בואו נדבר
+            </a>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

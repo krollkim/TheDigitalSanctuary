@@ -1,7 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { fadeIn, fadeUp, staggerContainer } from '@/lib/animations';
+import { useRef } from 'react';
+import { gsap, useGSAP } from '@/lib/gsap';
 
 // ─── Footer Links ─────────────────────────────────────────────────────────────
 const footerLinks = {
@@ -25,6 +25,7 @@ const footerLinks = {
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function Footer() {
+  const footerRef = useRef<HTMLElement>(null);
   const year = new Date().getFullYear();
 
   const handleNavClick = (
@@ -37,24 +38,40 @@ export default function Footer() {
     }
   };
 
+  useGSAP(() => {
+    const el = footerRef.current!;
+
+    // Columns stagger
+    gsap.from(el.querySelectorAll('.footer-col'), {
+      opacity: 0,
+      y: 20,
+      duration: 0.7,
+      ease: 'power3.out',
+      stagger: 0.1,
+      force3D: true,
+      scrollTrigger: { trigger: el, start: 'top 88%' },
+    });
+
+    // Bottom bar
+    gsap.from(el.querySelector('.footer-bottom'), {
+      opacity: 0,
+      duration: 0.6,
+      ease: 'power2.out',
+      scrollTrigger: { trigger: el.querySelector('.footer-bottom'), start: 'top 95%' },
+    });
+  }, { scope: footerRef });
+
   return (
     <footer
+      ref={footerRef}
       className="bg-sanctuary-brown text-sanctuary-beige/70"
       role="contentinfo"
     >
       <div className="section-wrapper max-w-7xl mx-auto py-16 sm:py-20">
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-60px' }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16"
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16">
+
           {/* ─── Brand Column ────────────────────────────────────────────────── */}
-          <motion.div
-            variants={fadeUp}
-            className="col-span-1 sm:col-span-2 lg:col-span-2 flex flex-col gap-5"
-          >
+          <div className="footer-col col-span-1 sm:col-span-2 lg:col-span-2 flex flex-col gap-5">
             <div className="flex flex-col gap-1">
               <span className="font-serif text-xl text-sanctuary-beige tracking-wider">
                 The Digital Sanctuary
@@ -67,22 +84,18 @@ export default function Footer() {
               פתרונות דיגיטליים לפרקטיקות טיפוליות שמאמינות שהחוויה הדיגיטלית
               היא חלק בלתי נפרד מהחוויה הטיפולית.
             </p>
-            {/* Small divider */}
             <div className="w-10 h-px bg-sanctuary-sage/30" aria-hidden="true" />
             <p className="font-sans text-xs text-sanctuary-beige/30">
               עיצוב שנולד מתוך הקשבה.
             </p>
-          </motion.div>
+          </div>
 
           {/* ─── Service Links ───────────────────────────────────────────────── */}
-          <motion.div variants={fadeUp} className="flex flex-col gap-5">
+          <div className="footer-col flex flex-col gap-5">
             <h3 className="font-sans text-xs font-medium text-sanctuary-sage-light/70 tracking-widest uppercase">
               {footerLinks.service.title}
             </h3>
-            <nav
-              aria-label="קישורי שירות"
-              className="flex flex-col gap-3"
-            >
+            <nav aria-label="קישורי שירות" className="flex flex-col gap-3">
               {footerLinks.service.items.map((item) => (
                 <a
                   key={item.label}
@@ -95,17 +108,14 @@ export default function Footer() {
                 </a>
               ))}
             </nav>
-          </motion.div>
+          </div>
 
           {/* ─── Contact Links ───────────────────────────────────────────────── */}
-          <motion.div variants={fadeUp} className="flex flex-col gap-5">
+          <div className="footer-col flex flex-col gap-5">
             <h3 className="font-sans text-xs font-medium text-sanctuary-sage-light/70 tracking-widest uppercase">
               {footerLinks.contact.title}
             </h3>
-            <nav
-              aria-label="קישורי יצירת קשר"
-              className="flex flex-col gap-3"
-            >
+            <nav aria-label="קישורי יצירת קשר" className="flex flex-col gap-3">
               {footerLinks.contact.items.map((item) => (
                 <a
                   key={item.label}
@@ -119,16 +129,12 @@ export default function Footer() {
                 </a>
               ))}
             </nav>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         {/* ─── Bottom Bar ──────────────────────────────────────────────────────── */}
-        <motion.div
-          variants={fadeIn}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="mt-14 pt-8 border-t border-sanctuary-beige/10
+        <div
+          className="footer-bottom mt-14 pt-8 border-t border-sanctuary-beige/10
             flex flex-col sm:flex-row items-center justify-between gap-4"
         >
           <p className="font-sans text-xs text-sanctuary-beige/30">
@@ -150,7 +156,7 @@ export default function Footer() {
               תנאי שימוש
             </a>
           </div>
-        </motion.div>
+        </div>
       </div>
     </footer>
   );

@@ -1,8 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { gsap, useGSAP } from '@/lib/gsap';
 import { MessageCircle, Palette, Rocket } from 'lucide-react';
-import { fadeUp, fadeIn, staggerContainer, slideFromStart, slideFromEnd, viewportOnce } from '@/lib/animations';
 
 // ─── Steps Data ───────────────────────────────────────────────────────────────
 const steps = [
@@ -17,7 +17,6 @@ const steps = [
     iconColor: 'text-sanctuary-sage-dark',
     numberColor: 'text-sanctuary-sage-light',
     labelColor: 'bg-sanctuary-sage/10 text-sanctuary-sage-dark',
-    variants: slideFromStart,
     size: 'md:col-span-1',
   },
   {
@@ -31,15 +30,64 @@ const steps = [
     iconColor: 'text-sanctuary-brown-mid',
     numberColor: 'text-sanctuary-clay/40',
     labelColor: 'bg-sanctuary-warm text-sanctuary-brown-mid',
-    variants: fadeUp,
     size: 'md:col-span-2',
   },
 ];
 
 // ─── Section Component ────────────────────────────────────────────────────────
 export default function Process() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    const el = sectionRef.current!;
+    const headerTrigger = { trigger: el, start: 'top 78%' };
+
+    // Section header
+    gsap.from(el.querySelectorAll('.proc-header > *'), {
+      opacity: 0,
+      y: 20,
+      duration: 0.7,
+      ease: 'power3.out',
+      stagger: 0.1,
+      force3D: true,
+      scrollTrigger: headerTrigger,
+    });
+
+    // Step 01 — slide from start (right in RTL)
+    gsap.from(el.querySelector('.proc-step-01'), {
+      opacity: 0,
+      x: 32,
+      duration: 0.75,
+      ease: 'power3.out',
+      force3D: true,
+      scrollTrigger: { trigger: el.querySelector('.proc-steps-row'), start: 'top 85%' },
+    });
+
+    // Step 02 — fade up
+    gsap.from(el.querySelector('.proc-step-02'), {
+      opacity: 0,
+      y: 24,
+      duration: 0.75,
+      ease: 'power3.out',
+      force3D: true,
+      scrollTrigger: { trigger: el.querySelector('.proc-steps-row'), start: 'top 85%' },
+      delay: 0.1,
+    });
+
+    // Step 03 dark card — slide from end (left in RTL)
+    gsap.from(el.querySelector('.proc-step-03'), {
+      opacity: 0,
+      x: -32,
+      duration: 0.75,
+      ease: 'power3.out',
+      force3D: true,
+      scrollTrigger: { trigger: el.querySelector('.proc-step-03'), start: 'top 88%' },
+    });
+  }, { scope: sectionRef });
+
   return (
     <section
+      ref={sectionRef}
       id="process"
       className="py-28 sm:py-36 bg-sanctuary-beige relative overflow-hidden"
       aria-labelledby="process-heading"
@@ -59,49 +107,31 @@ export default function Process() {
       <div className="section-wrapper max-w-7xl mx-auto relative z-10">
 
         {/* ─── Header ───────────────────────────────────────────────────────── */}
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOnce}
-          className="flex flex-col items-center text-center gap-5 mb-14 sm:mb-16"
-        >
-          <motion.span variants={fadeIn} className="label-tag text-sanctuary-sage">
-            התהליך שלנו
-          </motion.span>
-          <motion.h2
+        <div className="proc-header flex flex-col items-center text-center gap-5 mb-14 sm:mb-16">
+          <span className="label-tag text-sanctuary-sage">התהליך שלנו</span>
+          <h2
             id="process-heading"
-            variants={fadeUp}
             className="heading-section text-3xl sm:text-4xl lg:text-5xl
               text-sanctuary-brown max-w-2xl"
           >
             שלושה שלבים. בלי הפתעות.
-          </motion.h2>
-          <motion.div variants={fadeIn} className="divider-sanctuary" aria-hidden="true" />
-          <motion.p
-            variants={fadeUp}
-            className="body-balanced text-base sm:text-lg text-sanctuary-brown-mid max-w-xl"
-          >
+          </h2>
+          <div className="divider-sanctuary" aria-hidden="true" />
+          <p className="body-balanced text-base sm:text-lg text-sanctuary-brown-mid max-w-xl">
             אחת הסיבות העיקריות שמטפלים מהססים לפנות לעזרה דיגיטלית היא הפחד
             מהלא-נודע. אז הנה בדיוק מה שקורה.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         {/* ─── Top Row: Steps 01 + 02 ───────────────────────────────────────── */}
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOnce}
-          className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6 mb-5 lg:mb-6"
-        >
-          {steps.map((step) => {
+        <div className="proc-steps-row grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6 mb-5 lg:mb-6">
+          {steps.map((step, i) => {
             const Icon = step.icon;
             return (
-              <motion.article
+              <article
                 key={step.number}
-                variants={step.variants}
                 className={`
+                  ${i === 0 ? 'proc-step-01' : 'proc-step-02'}
                   ${step.size}
                   flex flex-col gap-5 p-8 lg:p-10
                   rounded-3xl border ${step.accent} shadow-sanctuary
@@ -137,18 +167,14 @@ export default function Process() {
                     {step.body}
                   </p>
                 </div>
-              </motion.article>
+              </article>
             );
           })}
-        </motion.div>
+        </div>
 
         {/* ─── Step 03 - Full-width Launch card ────────────────────────────── */}
-        <motion.article
-          variants={slideFromEnd}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOnce}
-          className="
+        <article
+          className="proc-step-03
             relative overflow-hidden
             bg-sanctuary-brown rounded-3xl border border-sanctuary-brown
             shadow-sanctuary-lg p-8 sm:p-10 lg:p-12
@@ -216,7 +242,7 @@ export default function Process() {
             </div>
 
           </div>
-        </motion.article>
+        </article>
 
       </div>
     </section>

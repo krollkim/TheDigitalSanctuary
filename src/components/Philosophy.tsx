@@ -1,13 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap';
 import { Feather, Palette, MessageSquareHeart } from 'lucide-react';
-import {
-  fadeUp,
-  fadeIn,
-  staggerContainer,
-  viewportOnce,
-} from '@/lib/animations';
 
 // ─── Philosophy Cards Data ────────────────────────────────────────────────────
 const cards = [
@@ -39,8 +34,53 @@ const cards = [
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function Philosophy() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    const el = sectionRef.current!;
+    const trigger = { trigger: el, start: 'top 78%' };
+
+    // Section header
+    gsap.from(el.querySelectorAll('.phil-header > *'), {
+      opacity: 0,
+      y: 20,
+      duration: 0.7,
+      ease: 'power3.out',
+      stagger: 0.1,
+      force3D: true,
+      scrollTrigger: trigger,
+    });
+
+    // Cards — per-element trigger via batch
+    ScrollTrigger.batch(el.querySelectorAll('.phil-card'), {
+      onEnter: (elements) => {
+        gsap.from(elements, {
+          opacity: 0,
+          y: 24,
+          duration: 0.75,
+          ease: 'power3.out',
+          stagger: 0.1,
+          force3D: true,
+        });
+      },
+      start: 'top 88%',
+      once: true,
+    });
+
+    // Blockquote
+    gsap.from(el.querySelector('.phil-quote'), {
+      opacity: 0,
+      y: 20,
+      duration: 0.7,
+      ease: 'power3.out',
+      force3D: true,
+      scrollTrigger: { trigger: el.querySelector('.phil-quote'), start: 'top 88%' },
+    });
+  }, { scope: sectionRef });
+
   return (
     <section
+      ref={sectionRef}
       id="philosophy"
       className="py-28 sm:py-36 bg-sanctuary-beige relative overflow-hidden"
       aria-labelledby="philosophy-heading"
@@ -54,62 +94,40 @@ export default function Philosophy() {
 
       <div className="section-wrapper max-w-7xl mx-auto relative z-10">
         {/* ─── Section Header ─────────────────────────────────────────────── */}
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOnce}
-          className="flex flex-col items-center text-center gap-5 mb-16 sm:mb-20"
-        >
-          <motion.span
-            variants={fadeIn}
-            className="label-tag text-sanctuary-sage"
-          >
-            הפילוסופיה שלנו
-          </motion.span>
+        <div className="phil-header flex flex-col items-center text-center gap-5 mb-16 sm:mb-20">
+          <span className="label-tag text-sanctuary-sage">הפילוסופיה שלנו</span>
 
-          <motion.h2
+          <h2
             id="philosophy-heading"
-            variants={fadeUp}
             className="heading-section text-3xl sm:text-4xl lg:text-5xl
               text-sanctuary-brown max-w-2xl"
           >
             כשהעיצוב מרגיש כמו נשימה עמוקה
-          </motion.h2>
+          </h2>
 
-          <motion.div variants={fadeIn} className="divider-sanctuary" aria-hidden="true" />
+          <div className="divider-sanctuary" aria-hidden="true" />
 
-          <motion.p
-            variants={fadeUp}
-            className="body-balanced text-base sm:text-lg text-sanctuary-brown-mid max-w-xl"
-          >
+          <p className="body-balanced text-base sm:text-lg text-sanctuary-brown-mid max-w-xl">
             המטופל שלכם מגיע לאתר שלכם ברגע פגיע. כל החלטת עיצוב שלנו
             מבוססת על שאלה אחת:{' '}
             <em className="font-normal not-italic text-sanctuary-brown">
               &quot;האם זה גורם לו להרגיש בטוח?&quot;
             </em>
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         {/* ─── Cards Grid ─────────────────────────────────────────────────── */}
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOnce}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {cards.map((card) => {
             const Icon = card.icon;
             return (
-              <motion.article
+              <article
                 key={card.title}
-                variants={fadeUp}
-                whileHover={{ y: -5, transition: { duration: 0.3 } }}
                 className={`
+                  phil-card
                   relative flex flex-col gap-5 p-8 lg:p-10
                   rounded-3xl border ${card.accent}
-                  transition-all duration-500
+                  transition-transform duration-300 hover:-translate-y-1
                 `}
               >
                 {/* Icon */}
@@ -132,19 +150,13 @@ export default function Philosophy() {
                     {card.body}
                   </p>
                 </div>
-              </motion.article>
+              </article>
             );
           })}
-        </motion.div>
+        </div>
 
         {/* ─── Bottom Quote ────────────────────────────────────────────────── */}
-        <motion.blockquote
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOnce}
-          className="mt-20 text-center"
-        >
+        <blockquote className="phil-quote mt-20 text-center">
           <p
             className="font-serif text-xl sm:text-2xl text-sanctuary-brown-mid
               font-light italic max-w-2xl mx-auto leading-relaxed"
@@ -157,7 +169,7 @@ export default function Philosophy() {
               - הצוות שלנו, The Digital Sanctuary
             </cite>
           </footer>
-        </motion.blockquote>
+        </blockquote>
       </div>
     </section>
   );
