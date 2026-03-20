@@ -131,7 +131,7 @@ export default function CaseStudy() {
 
         {/* ─── Header ───────────────────────────────────────────────────────── */}
         <div className="cs-header flex flex-col items-center text-center gap-5 mb-14 sm:mb-16">
-          <span className="label-tag text-sanctuary-brown-mid">סיפור לקוחה</span>
+          <span className="label-tag text-sanctuary-brown-mid">סיפור לקוח</span>
           <h2
             id="case-study-heading"
             className="heading-section text-3xl sm:text-4xl lg:text-5xl
@@ -142,8 +142,8 @@ export default function CaseStudy() {
           <div className="divider-sanctuary" aria-hidden="true" />
           <p className="body-balanced text-base sm:text-lg text-sanctuary-brown-mid max-w-xl">
             א&apos; מלווה נשים בתהליכי שחרור רגשי, תנועה ובניית ביטחון עצמי.
-            הסיפור שלה הוא הסיפור של כל מטפלת שיודעת בדיוק מה היא רוצה להעניק -
-            ורק צריכה מישהו שיתרגם זאת לשפה שהדיגיטל מבין.
+            הסיפור שלה הוא הסיפור של כל מטפל ומטפלת שיודעים בדיוק מה הם רוצים להעניק -
+            ורק צריכים מישהו שיתרגם זאת לשפה שהדיגיטל מבין.
           </p>
         </div>
 

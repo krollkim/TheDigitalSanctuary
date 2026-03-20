@@ -32,8 +32,8 @@ const steps = [
   {
     number: '02',
     label: 'מפת הדרכים האישית',
-    heading: 'ממפים את המסע שלכם — ביחד',
-    body: 'במהלך השיחה נמפה את הפערים ונבנה יחד את תוכנית הפעולה האישית שלך. בסוף השיחה תצאי עם בהירות מלאה לגבי הצעדים הבאים שלך.',
+    heading: 'ממפים את המסע שלכם - ביחד',
+    body: 'במהלך השיחה נמפה את הפערים ונבנה יחד את תוכנית הפעולה האישית שלך. בסוף השיחה תצאו עם בהירות מלאה לגבי הצעדים הבאים שלך.',
   },
   {
     number: '03',
@@ -301,7 +301,7 @@ export default function RoadmapPage() {
     });
   }, { scope: formSectionRef });
 
-  // Floating CTA — GSAP in/out
+  // Floating CTA - GSAP in/out
   useEffect(() => {
     const el = floatingRef.current;
     if (!el) return;
@@ -371,30 +371,22 @@ export default function RoadmapPage() {
                   bg-sanctuary-sage/10 border border-sanctuary-sage-light px-4 py-2 rounded-full"
               >
                 <Sparkles size={11} aria-hidden="true" />
-                שיחת Roadmap — בחינם
+                שיחת Roadmap - בחינם
               </span>
 
               <h1
                 className="hero-item font-serif text-4xl sm:text-5xl lg:text-6xl text-sanctuary-brown
                   font-light leading-tight tracking-wide"
               >
-                הפרקטיקה שלך ראויה לנוכחות דיגיטלית שתביא מטופלים -
-                <span className="relative inline-block mx-2">
-                  <span className="relative z-10"> לא תסכול</span>
-                  <span
-                    className="absolute bottom-1 start-0 end-0 h-2 bg-sanctuary-sage-light/50
-                      rounded-sm -z-0"
-                    aria-hidden="true"
-                  />
-                </span>
+                הפרקטיקה שלך ראויה לנוכחות דיגיטלית שתביא מטופלים
               </h1>
 
               <p
                 className="hero-item font-sans text-base sm:text-lg text-sanctuary-brown-mid
                   leading-relaxed max-w-lg"
               >
-                שיחת ייעוץ של 20 דקות שבסופה תצאי עם תוכנית פעולה ברורה לנוכחות
-                הדיגיטלית שלך — שנבנית ביחד, לא מתוך קובץ.
+                שיחת ייעוץ של 20 דקות שבסופה תצאו עם תוכנית פעולה ברורה לנוכחות
+                הדיגיטלית שלך - שנבנית ביחד, לא מתוך קובץ.
               </p>
 
               <div className="hero-item flex flex-col items-center gap-3">
@@ -512,7 +504,7 @@ export default function RoadmapPage() {
               <div className="form-item flex flex-col items-center text-center gap-4">
                 <span className="label-tag text-sanctuary-sage">הצעד הראשון</span>
                 <h2 className="font-serif text-3xl sm:text-4xl text-sanctuary-brown font-light">
-                  בואי נשרטט את מפת הדרכים שלך —
+                  בואו נשרטט את מפת הדרכים שלך -
                   <span className="relative inline-block mx-1">
                     <span className="relative z-10">בחינם</span>
                     <span
@@ -524,7 +516,7 @@ export default function RoadmapPage() {
                 </h2>
                 <div className="divider-sanctuary" aria-hidden="true" />
                 <p className="font-sans text-base text-sanctuary-brown-mid max-w-sm leading-relaxed">
-                  שיחת ייעוץ קצרה (20 דק׳) שבסופה תצאי עם תוכנית פעולה ברורה לנוכחות
+                  שיחת ייעוץ קצרה (20 דק׳) שבסופה תצאו עם תוכנית פעולה ברורה לנוכחות
                   הדיגיטלית שלך. בלי התחייבות, בלי ז׳רגון טכנולוגי.
                 </p>
               </div>

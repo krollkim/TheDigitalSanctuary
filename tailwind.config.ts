@@ -25,8 +25,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        serif: ['var(--font-frank-ruhl)', 'Georgia', 'serif'],
-        sans: ['var(--font-heebo)', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-noto-serif)', 'Georgia', 'serif'],
+        sans: ['var(--font-assistant)', 'system-ui', 'sans-serif'],
       },
       fontSize: {
         '7xl': ['4.5rem', { lineHeight: '1.1' }],

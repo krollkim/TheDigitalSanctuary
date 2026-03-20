@@ -1,20 +1,20 @@
 import type { Metadata } from 'next';
-import { Frank_Ruhl_Libre, Heebo } from 'next/font/google';
+import { Noto_Serif_Hebrew, Assistant } from 'next/font/google';
 import './globals.css';
 import AccessibilityWidget from '@/components/AccessibilityWidget';
 
 // ─── Fonts ────────────────────────────────────────────────────────────────────
-const frankRuhl = Frank_Ruhl_Libre({
+const notoSerifHebrew = Noto_Serif_Hebrew({
   subsets: ['hebrew', 'latin'],
-  weight: ['300', '400', '500', '700', '900'],
-  variable: '--font-frank-ruhl',
+  weight: ['300', '400', '500', '700'],
+  variable: '--font-noto-serif',
   display: 'swap',
 });
 
-const heebo = Heebo({
+const assistant = Assistant({
   subsets: ['hebrew', 'latin'],
   weight: ['300', '400', '500', '600'],
-  variable: '--font-heebo',
+  variable: '--font-assistant',
   display: 'swap',
 });
 
@@ -108,7 +108,7 @@ export default function RootLayout({
     <html
       lang="he"
       dir="rtl"
-      className={`${frankRuhl.variable} ${heebo.variable}`}
+      className={`${notoSerifHebrew.variable} ${assistant.variable}`}
     >
       <head>
         <script
