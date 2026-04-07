@@ -12,6 +12,7 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import Link from 'next/link';
+import { HeroVisuals } from '@/components/HeroVisuals';
 
 // ─── Pain Points ──────────────────────────────────────────────────────────────
 const painPoints = [
@@ -356,6 +357,9 @@ export default function RoadmapPage() {
 
         {/* ── Hero ───────────────────────────────────────────────────────────── */}
         <section ref={heroRef} className="relative overflow-hidden py-24 sm:py-36">
+          {/* Concentric rings — decorative background */}
+          <HeroVisuals />
+
           {/* Background glow */}
           <div
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
