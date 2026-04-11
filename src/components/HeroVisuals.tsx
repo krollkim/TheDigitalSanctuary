@@ -127,8 +127,10 @@ export function HeroVisuals() {
             cx={CX} cy={CY} r="450"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="8%"   stopColor="white" stopOpacity="1" />
-            <stop offset="58%"  stopColor="white" stopOpacity="0.72" />
+            {/* Donut shape: faint at centre (text zone), peaks at mid-ring, dissolves at edge */}
+            <stop offset="0%"   stopColor="white" stopOpacity="0.28" />
+            <stop offset="45%"  stopColor="white" stopOpacity="0.68" />
+            <stop offset="75%"  stopColor="white" stopOpacity="0.60" />
             <stop offset="100%" stopColor="white" stopOpacity="0" />
           </radialGradient>
           <mask id="mmask">
