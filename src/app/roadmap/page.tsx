@@ -370,7 +370,7 @@ export default function RoadmapPage() {
 
           <div className="relative z-10 max-w-2xl mx-auto px-6 sm:px-10">
             <div className="flex flex-col items-center text-center gap-7
-            bg-white/70 backdrop-blur-md rounded-3xl
+            bg-white/85 sm:bg-white/70 sm:backdrop-blur-md rounded-3xl
             px-8 py-12 sm:py-14
             border border-white/50 shadow-sanctuary">
               <span
