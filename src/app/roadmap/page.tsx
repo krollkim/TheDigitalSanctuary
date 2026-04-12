@@ -575,7 +575,7 @@ export default function RoadmapPage() {
       >
         <button
           onClick={scrollToForm}
-          className="btn-primary shadow-sanctuary-md px-7 py-3.5 text-sm whitespace-nowrap"
+          className="btn-primary shadow-sanctuary-md px-7 py-3.5 text-sm whitespace-nowrap mb-12"
         >
           <MapPin size={15} strokeWidth={1.5} aria-hidden="true" />
           <span>תיאום שיחת Roadmap במתנה</span>
