@@ -265,12 +265,12 @@ export default function RoadmapPage() {
     const el = validationRef.current!;
     gsap.from(el.querySelectorAll('.val-item'), {
       opacity: 0,
-      y: 20,
-      duration: 0.7,
-      ease: 'power3.out',
-      stagger: 0.1,
+      y: 35,
+      duration: 1.1,
+      ease: 'power2.out',
+      stagger: 0.2,
       force3D: true,
-      scrollTrigger: { trigger: el, start: 'top 80%' },
+      scrollTrigger: { trigger: el, start: 'top 70%' },
     });
   }, { scope: validationRef });
 
@@ -279,12 +279,12 @@ export default function RoadmapPage() {
     const el = processRef.current!;
     gsap.from(el.querySelectorAll('.proc-item'), {
       opacity: 0,
-      y: 20,
-      duration: 0.7,
-      ease: 'power3.out',
-      stagger: 0.12,
+      y: 35,
+      duration: 1.1,
+      ease: 'power2.out',
+      stagger: 0.2,
       force3D: true,
-      scrollTrigger: { trigger: el, start: 'top 80%' },
+      scrollTrigger: { trigger: el, start: 'top 70%' },
     });
   }, { scope: processRef });
 
@@ -293,12 +293,12 @@ export default function RoadmapPage() {
     const el = formSectionRef.current!;
     gsap.from(el.querySelectorAll('.form-item'), {
       opacity: 0,
-      y: 20,
-      duration: 0.7,
-      ease: 'power3.out',
-      stagger: 0.12,
+      y: 35,
+      duration: 1.1,
+      ease: 'power2.out',
+      stagger: 0.2,
       force3D: true,
-      scrollTrigger: { trigger: el, start: 'top 80%' },
+      scrollTrigger: { trigger: el, start: 'top 70%' },
     });
   }, { scope: formSectionRef });
 
