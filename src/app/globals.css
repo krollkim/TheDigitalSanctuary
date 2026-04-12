@@ -73,12 +73,12 @@ html {
   /* ─── Primary Button ─────────────────────────────────────────── */
   .btn-primary {
     @apply inline-flex items-center gap-3
-    bg-sanctuary-brown text-sanctuary-off-white
+    bg-sanctuary-sage text-sanctuary-off-white
     px-8 py-4 rounded-full
     font-sans font-medium text-sm tracking-wide
     transition-all duration-300 ease-sanctuary
-    hover:bg-sanctuary-brown-mid hover:shadow-sanctuary-md hover:-translate-y-0.5
-    focus-visible:ring-2 focus-visible:ring-sanctuary-brown focus-visible:ring-offset-2;
+    hover:bg-sanctuary-sage-dark hover:shadow-sanctuary-md hover:-translate-y-0.5
+    focus-visible:ring-2 focus-visible:ring-sanctuary-sage focus-visible:ring-offset-2;
   }
 
   /* ─── Ghost Button ───────────────────────────────────────────── */

@@ -13,33 +13,6 @@ const A12 = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330] as const;
 const A16 = Array.from({ length: 16 }, (_, i) => i * 22.5);
 
 // ─── Pre-computed SVG paths ───────────────────────────────────────────────────
-// All paths point in the +x direction from centre.
-// SVG rotate(angle, CX, CY) transforms each copy into its final orientation.
-//
-// Maths reference (SVG clockwise):
-//   rot(x,y,θ) = [CX + dx·cosθ - dy·sinθ,  CY + dx·sinθ + dy·cosθ]
-//   where dx = x−CX, dy = y−CY
-//
-// Inner petal — lens shape, r 50 → 91
-//   Left tip (550,300), right tip (591,300), peak height ±28
-//
-// Inner bridge — outward arc between adjacent tips (r=91 at 0° and 45°)
-//   End: rot(591,300,45°) = (564.3, 364.3)  Control: r=108 @ 22.5° = (600,341)
-//
-// Inner star — arc from tip to tip-two-ahead (every-other, forms octagram)
-//   End: rot(591,300,90°) = (500,391)  Control: r=105 @ 45° = (574,374)
-//
-// Mid petal — lens shape, r 110 → 191
-//   Left tip (610,300), right tip (691,300), peak height ±51
-//
-// Mid bridge — outward arc adjacent tips
-//   End: rot(691,300,45°) = (635.1,435.1)  Control: r=220 @ 22.5° = (703,384)
-//
-// Outer petal — lens shape, r 240 → 350
-//   Left tip (740,300), right tip (850,300), peak height ±71
-//
-// Outer rose arc — 12-fold, r=285 tips
-//   End: rot(785,300,30°) = (746.8,442.5)  Control: r=316 @ 15° = (805,382)
 const PATH = {
   innerPetal:  'M 550,300 C 554,277 582,272 591,300 C 582,328 554,323 550,300 Z',
   innerVein:   'M 554,300 L 589,300',
@@ -80,8 +53,8 @@ function DotRing({
 }
 
 // ─── Mobile detection ─────────────────────────────────────────────────────────
-// Breakpoint matches Tailwind sm: (640px) — aligned with backdrop-blur removal.
-// Initialises false for SSR safety; useEffect corrects before first paint.
+// Used only to skip GSAP — the element itself is hidden via CSS on mobile.
+// Initialises false for SSR safety (no window on server).
 function useIsMobile(): boolean {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
@@ -95,18 +68,20 @@ function useIsMobile(): boolean {
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
+// Visible only on sm+ (≥ 640px) via `hidden sm:block`.
+// GSAP tweens are skipped entirely on mobile — no CPU/GPU cost.
 export function HeroVisuals() {
   const isMobile = useIsMobile();
   const breathRef = useRef<SVGGElement>(null);
   const rotRef    = useRef<SVGGElement>(null);
 
   useEffect(() => {
+    if (isMobile) return;
+
     const breathEl = breathRef.current;
     const rotEl    = rotRef.current;
     if (!breathEl || !rotEl) return;
 
-    // Imperceptibly slow rotation — the whole mandala turns once in 2.5 minutes
-    // force3D: true → GSAP outputs matrix3d, browser promotes layer to GPU compositor
     const rotTween = gsap.to(rotEl, {
       rotation: 360,
       svgOrigin: `${CX} ${CY}`,
@@ -116,7 +91,6 @@ export function HeroVisuals() {
       force3D: true,
     });
 
-    // Slow breath — in 5.2 s, out 5.2 s, scale barely perceptible (±3.2%)
     const breathTween = gsap.to(breathEl, {
       scale: 1.032,
       svgOrigin: `${CX} ${CY}`,
@@ -128,10 +102,10 @@ export function HeroVisuals() {
     });
 
     return () => { rotTween.kill(); breathTween.kill(); };
-  }, []);
+  }, [isMobile]);
 
   return (
-    <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
+    <div className="hidden sm:block absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
       <svg
         width="100%"
         height="100%"
@@ -156,10 +130,10 @@ export function HeroVisuals() {
           </mask>
         </defs>
 
-        {/* Breathe wrapper (scale) — will-change promotes GPU layer before first frame */}
+        {/* Breathe wrapper (scale) */}
         <g ref={breathRef} mask="url(#mmask)" style={{ willChange: 'transform' }}>
 
-          {/* Rotation wrapper — separate GPU layer from breathe for clean compositing */}
+          {/* Rotation wrapper */}
           <g
             ref={rotRef}
             stroke="#b3ac88"
@@ -173,10 +147,7 @@ export function HeroVisuals() {
             {A8.map(a => (
               <g key={`ip${a}`} transform={`rotate(${a},${CX},${CY})`}>
                 <path d={PATH.innerPetal} fill="none" strokeWidth="1"    opacity="0.54" />
-                {/* Sub-pixel veins omitted on mobile — anti-aliasing cost, near-invisible */}
-                {!isMobile && (
-                  <path d={PATH.innerVein}  fill="none" strokeWidth="0.45" opacity="0.28" />
-                )}
+                <path d={PATH.innerVein}  fill="none" strokeWidth="0.45" opacity="0.28" />
               </g>
             ))}
 
@@ -209,26 +180,19 @@ export function HeroVisuals() {
               />
             ))}
 
-            {/* Spacer ring r=102 — omitted on mobile */}
-            {!isMobile && (
-              <>
-                <circle
-                  cx={CX} cy={CY} r="102"
-                  fill="none" strokeWidth="0.5" opacity="0.20" strokeDasharray="2 6"
-                />
-                <DotRing angles={A16} r={102} dotR={1.7} opacity={0.36} />
-              </>
-            )}
+            {/* Spacer ring r=102 with 16 accent dots */}
+            <circle
+              cx={CX} cy={CY} r="102"
+              fill="none" strokeWidth="0.5" opacity="0.20" strokeDasharray="2 6"
+            />
+            <DotRing angles={A16} r={102} dotR={1.7} opacity={0.36} />
 
 
             {/* ══ RING 2 — Middle petals  r 110 → 191 ═════════════════════════ */}
             {A8.map(a => (
               <g key={`mp${a}`} transform={`rotate(${a},${CX},${CY})`}>
                 <path d={PATH.midPetal} fill="none" strokeWidth="1.1"  opacity="0.45" />
-                {/* Sub-pixel veins omitted on mobile */}
-                {!isMobile && (
-                  <path d={PATH.midVein}  fill="none" strokeWidth="0.45" opacity="0.18" />
-                )}
+                <path d={PATH.midVein}  fill="none" strokeWidth="0.45" opacity="0.18" />
               </g>
             ))}
 
@@ -242,7 +206,7 @@ export function HeroVisuals() {
               />
             ))}
 
-            {/* Dots at mid petal tips (r=695) */}
+            {/* Dots at mid petal tips */}
             {A8.map(a => (
               <circle
                 key={`mdt${a}`}
@@ -251,65 +215,53 @@ export function HeroVisuals() {
               />
             ))}
 
-            {/* Spacer ring r=200 — omitted on mobile */}
-            {!isMobile && (
-              <>
-                <circle
-                  cx={CX} cy={CY} r="200"
-                  fill="none" strokeWidth="0.65" opacity="0.18" strokeDasharray="3 8"
-                />
-                <DotRing angles={A8} r={200} dotR={2.3} opacity={0.32} />
-              </>
-            )}
+            {/* Spacer ring r=200 with 8 accent dots */}
+            <circle
+              cx={CX} cy={CY} r="200"
+              fill="none" strokeWidth="0.65" opacity="0.18" strokeDasharray="3 8"
+            />
+            <DotRing angles={A8} r={200} dotR={2.3} opacity={0.32} />
 
 
-            {/* ══ RING 3 — Outer petals  r 240 → 350 — desktop only ════════════ */}
-            {!isMobile && (
-              <>
-                {A8.map(a => (
-                  <path
-                    key={`op${a}`}
-                    d={PATH.outerPetal}
-                    fill="none" strokeWidth="1.2" opacity="0.24"
-                    transform={`rotate(${a},${CX},${CY})`}
-                  />
-                ))}
+            {/* ══ RING 3 — Outer petals  r 240 → 350 ══════════════════════════ */}
+            {A8.map(a => (
+              <path
+                key={`op${a}`}
+                d={PATH.outerPetal}
+                fill="none" strokeWidth="1.2" opacity="0.24"
+                transform={`rotate(${a},${CX},${CY})`}
+              />
+            ))}
 
-                {/* Dots at outer petal tips (r=854) */}
-                {A8.map(a => (
-                  <circle
-                    key={`odt${a}`}
-                    cx="854" cy="300" r="3.0" opacity="0.28"
-                    transform={`rotate(${a},${CX},${CY})`}
-                  />
-                ))}
+            {/* Dots at outer petal tips */}
+            {A8.map(a => (
+              <circle
+                key={`odt${a}`}
+                cx="854" cy="300" r="3.0" opacity="0.28"
+                transform={`rotate(${a},${CX},${CY})`}
+              />
+            ))}
 
-                {/* 12-fold outer rose arcs — weave at r=285 */}
-                {A12.map(a => (
-                  <path
-                    key={`or${a}`}
-                    d={PATH.outerRose}
-                    fill="none" strokeWidth="0.85" opacity="0.18"
-                    transform={`rotate(${a},${CX},${CY})`}
-                  />
-                ))}
-              </>
-            )}
+            {/* 12-fold outer rose arcs — weave at r=285 */}
+            {A12.map(a => (
+              <path
+                key={`or${a}`}
+                d={PATH.outerRose}
+                fill="none" strokeWidth="0.85" opacity="0.18"
+                transform={`rotate(${a},${CX},${CY})`}
+              />
+            ))}
 
 
-            {/* ══ HALO — Dissolving outer rings — desktop only ════════════════ */}
-            {!isMobile && (
-              <>
-                <circle cx={CX} cy={CY} r="315" fill="none" strokeWidth="0.65" opacity="0.15" />
-                <circle cx={CX} cy={CY} r="347" fill="none" strokeWidth="0.5"  opacity="0.11"
-                  strokeDasharray="4 9" />
-                <circle cx={CX} cy={CY} r="380" fill="none" strokeWidth="0.5"  opacity="0.08" />
-                <circle cx={CX} cy={CY} r="415" fill="none" strokeWidth="0.5"  opacity="0.06" />
+            {/* ══ HALO — Dissolving outer rings ════════════════════════════════ */}
+            <circle cx={CX} cy={CY} r="315" fill="none" strokeWidth="0.65" opacity="0.15" />
+            <circle cx={CX} cy={CY} r="347" fill="none" strokeWidth="0.5"  opacity="0.11"
+              strokeDasharray="4 9" />
+            <circle cx={CX} cy={CY} r="380" fill="none" strokeWidth="0.5"  opacity="0.08" />
+            <circle cx={CX} cy={CY} r="415" fill="none" strokeWidth="0.5"  opacity="0.06" />
 
-                {/* 12 dots on innermost halo ring */}
-                <DotRing angles={A12} r={315} dotR={2.4} opacity={0.20} />
-              </>
-            )}
+            {/* 12 dots on innermost halo ring */}
+            <DotRing angles={A12} r={315} dotR={2.4} opacity={0.20} />
 
           </g>
         </g>
