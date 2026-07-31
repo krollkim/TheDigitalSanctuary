@@ -35,7 +35,7 @@ export default function AccessibilityPage() {
           className="
             inline-flex items-center gap-2
             font-sans text-sm text-sanctuary-brown-light
-            hover:text-sanctuary-sage-dark transition-colors duration-200
+            hover:text-sanctuary-brown transition-colors duration-200
             mb-12
           "
         >
@@ -44,7 +44,7 @@ export default function AccessibilityPage() {
 
         {/* Page header */}
         <div className="flex flex-col gap-4 mb-14">
-          <span className="font-sans text-xs font-medium tracking-widest uppercase text-sanctuary-sage">
+          <span className="font-sans text-xs font-medium tracking-widest uppercase text-sanctuary-brown-mid">
             מסמך נגישות
           </span>
           <h1 className="font-serif text-4xl sm:text-5xl text-sanctuary-brown font-light tracking-wide leading-tight">
@@ -178,8 +178,8 @@ export default function AccessibilityPage() {
                 <strong className="font-medium text-sanctuary-brown">אימייל:</strong>{' '}
                 <a
                   href="mailto:krollkimdev@gmail.com"
-                  className="text-sanctuary-sage-dark underline underline-offset-2
-                    hover:text-sanctuary-sage transition-colors duration-200"
+                  className="text-sanctuary-brown-mid underline underline-offset-2
+                    hover:text-sanctuary-brown transition-colors duration-200"
                 >
                   krollkimdev@gmail.com
                 </a>

@@ -9,19 +9,43 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Every token resolves through a CSS variable holding space-separated
+        // RGB channels, so `html.a11y-high-contrast` can swap the whole palette
+        // at the source. The `<alpha-value>` placeholder keeps Tailwind's
+        // opacity modifiers (`text-sanctuary-beige/60`) working.
+        // Literal hex values live in globals.css :root — see that file.
         sanctuary: {
-          'off-white': '#FAFAF7',
-          beige: '#F5F5DC',
-          warm: '#EDE8D0',
-          sage: '#B2AC88',
-          'sage-light': '#D4D4B8',
-          'sage-mid': '#C8C4A0',
-          'sage-dark': '#8A8668',
-          clay: '#C4A882',
-          brown: '#3D3530',
-          'brown-mid': '#6B5D55',
-          'brown-light': '#9A8A80',
-          'brown-faint': '#F0EBE5',
+          // ── Surfaces ────────────────────────────────────────────────
+          // The calm of the palette lives here. Unchanged from the original.
+          'off-white': 'rgb(var(--c-off-white) / <alpha-value>)',
+          beige: 'rgb(var(--c-beige) / <alpha-value>)',
+          warm: 'rgb(var(--c-warm) / <alpha-value>)',
+          'brown-faint': 'rgb(var(--c-brown-faint) / <alpha-value>)',
+          brown: 'rgb(var(--c-brown) / <alpha-value>)',
+
+          // ── Accents (surface-only) ──────────────────────────────────
+          // Too light to carry text. Tinted fills / blurs / rules only,
+          // never `text-*`. For sage-as-ink use `sage-deep`.
+          sage: 'rgb(var(--c-sage) / <alpha-value>)',
+          'sage-light': 'rgb(var(--c-sage-light) / <alpha-value>)',
+          'sage-mid': 'rgb(var(--c-sage-mid) / <alpha-value>)',
+          clay: 'rgb(var(--c-clay) / <alpha-value>)',
+          'clay-mid': 'rgb(var(--c-clay-mid) / <alpha-value>)',
+
+          // ── Action ──────────────────────────────────────────────────
+          // Named by role. Use at full strength for controls, at low alpha
+          // (/10–/25) for the decorative work that echoes them.
+          action: 'rgb(var(--c-action) / <alpha-value>)',
+          'action-hover': 'rgb(var(--c-action-hover) / <alpha-value>)',
+
+          // ── Ink ─────────────────────────────────────────────────────
+          // Every value clears WCAG AA (4.5:1) on off-white, beige, warm
+          // and white. Deepened, not recoloured — the hues are unchanged.
+          'sage-deep': 'rgb(var(--c-sage-deep) / <alpha-value>)',
+          'sage-btn': 'rgb(var(--c-sage-btn) / <alpha-value>)',
+          'sage-dark': 'rgb(var(--c-sage-dark) / <alpha-value>)',
+          'brown-mid': 'rgb(var(--c-brown-mid) / <alpha-value>)',
+          'brown-light': 'rgb(var(--c-brown-light) / <alpha-value>)',
         },
       },
       fontFamily: {

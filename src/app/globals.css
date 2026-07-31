@@ -2,15 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─── CSS Custom Properties ─────────────────────────────────────── */
+/* ─── Palette ───────────────────────────────────────────────────────
+   Single source of truth. Space-separated RGB channels so Tailwind can
+   apply opacity modifiers via `rgb(var(--c-x) / <alpha-value>)`.
+   Ratios in comments are measured against the surfaces they sit on. */
 :root {
-  --color-off-white: #fafaf7;
-  --color-beige: #f5f5dc;
-  --color-warm: #ede8d0;
-  --color-sage: #b2ac88;
-  --color-sage-light: #d4d4b8;
-  --color-brown: #3d3530;
-  --color-brown-mid: #6b5d55;
+  /* Surfaces */
+  --c-off-white: 250 250 247;
+  --c-beige: 245 245 220;
+  --c-warm: 237 232 208;
+  --c-brown-faint: 240 235 229;
+  --c-brown: 61 53 48;
+
+  /* Accents — surface use only, never text */
+  --c-sage: 178 172 136;
+  --c-sage-light: 212 212 184;
+  --c-sage-mid: 200 196 160;
+  --c-clay: 196 168 130;
+  --c-clay-mid: 168 132 90; /* 3.44:1 — large decorative numerals */
+
+  /* Action colour — named by role, not by hue, so changing the colour is a
+     value edit and nothing else.
+     Burgundy. The palette is cream → yellow → brown, and a light accent could
+     never separate from it: the best any pastel managed against the page was
+     2.19:1, which is why earlier attempts needed a border to be identifiable
+     at all. Burgundy clears 8.78:1 against the page on its own, so the button
+     needs no border, and cream text on it reaches 8.78:1 (AAA).
+     Used at low alpha it becomes a soft dusty rose for decorative work —
+     see the tints in the hero. */
+  --c-action: 123 45 62; /* #7B2D3E — cream on it: 8.78:1 */
+  --c-action-hover: 106 36 53; /* #6A2435 — cream on it: 10.48:1 */
+
+  /* Ink — all ≥ 4.5:1 on every surface above */
+  --c-sage-deep: 95 91 62; /* 5.59–6.88:1  labels, links */
+  --c-sage-btn: 110 106 73; /* 5.26:1       primary button surface */
+  --c-sage-dark: 138 134 104; /* 3.69:1     large numerals / icons */
+  --c-brown-mid: 87 73 63; /* 7.02–8.64:1  body copy — AAA on every surface */
+  --c-brown-light: 122 106 95; /* 4.21–5.18:1 helper / meta text */
+
+  /* Convenience aliases for hand-written CSS below */
+  --color-beige: rgb(var(--c-beige));
+  --color-sage: rgb(var(--c-sage));
+  --color-sage-light: rgb(var(--c-sage-light));
+  --color-sage-deep: rgb(var(--c-sage-deep));
+  --color-brown: rgb(var(--c-brown));
 }
 
 /* ─── Smooth Scrolling ───────────────────────────────────────────── */
@@ -27,8 +62,10 @@ html {
 }
 
 /* ─── Focus Ring ─────────────────────────────────────────────────── */
+/* Focus indicators are non-text UI and need 3:1 against the adjacent
+   surface (WCAG 1.4.11). --color-sage gave only 2.19:1 on off-white. */
 :focus-visible {
-  outline: 2px solid var(--color-sage);
+  outline: 2px solid var(--color-brown);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -41,11 +78,11 @@ html {
   background: var(--color-beige);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-sage);
+  background: rgb(var(--c-action) / 0.55);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #8a8668;
+  background: rgb(var(--c-action));
 }
 
 /* ─── Typography Utilities ───────────────────────────────────────── */
@@ -56,11 +93,18 @@ html {
   .heading-section {
     @apply font-serif font-normal tracking-wide;
   }
+  /* Weight 300 is too fragile for Hebrew body copy — Hebrew has no ascenders
+     or descenders to help the eye recover letterforms, so thin strokes at
+     small sizes cost far more legibility than they do in Latin. 400 keeps the
+     airy feel while staying readable on a phone. */
   .body-balanced {
-    @apply font-sans font-light leading-relaxed;
+    @apply font-sans font-normal leading-relaxed;
   }
+  /* Hebrew has no letter case, so `uppercase` is inert here while
+     `tracking-widest` still pulls the word apart. Keep the airy feel
+     with `tracking-wide`, which reads as a label without fragmenting. */
   .label-tag {
-    @apply font-sans text-xs font-medium tracking-widest uppercase;
+    @apply font-sans text-xs font-medium tracking-wide uppercase;
   }
 
   /* ─── Sanctuary Card ─────────────────────────────────────────── */
@@ -73,12 +117,12 @@ html {
   /* ─── Primary Button ─────────────────────────────────────────── */
   .btn-primary {
     @apply inline-flex items-center gap-3
-    bg-sanctuary-sage text-sanctuary-off-white
+    bg-sanctuary-action text-sanctuary-off-white
     px-8 py-4 rounded-full
     font-sans font-medium text-sm tracking-wide
     transition-all duration-300 ease-sanctuary
-    hover:bg-sanctuary-sage-dark hover:shadow-sanctuary-md hover:-translate-y-0.5
-    focus-visible:ring-2 focus-visible:ring-sanctuary-sage focus-visible:ring-offset-2;
+    hover:bg-sanctuary-action-hover hover:shadow-sanctuary-md hover:-translate-y-0.5
+    focus-visible:ring-2 focus-visible:ring-sanctuary-action focus-visible:ring-offset-2;
   }
 
   /* ─── Ghost Button ───────────────────────────────────────────── */
@@ -88,7 +132,7 @@ html {
     px-8 py-4 rounded-full
     font-sans font-medium text-sm tracking-wide
     transition-all duration-300 ease-sanctuary
-    hover:border-sanctuary-sage hover:text-sanctuary-sage-dark hover:bg-sanctuary-sage-light/20
+    hover:border-sanctuary-sage hover:text-sanctuary-sage-deep hover:bg-sanctuary-sage-light/20
     focus-visible:ring-2 focus-visible:ring-sanctuary-sage focus-visible:ring-offset-2;
   }
 
@@ -110,11 +154,42 @@ html.a11y-large-text {
   font-size: 112.5%;
 }
 
-/* High contrast: filter targets <main> only.
-   The AccessibilityWidget lives as a sibling of <main> inside <body>,
-   so it is never inside the filtered subtree and is never affected. */
-html.a11y-high-contrast main {
-  filter: contrast(1.6) saturate(0.85);
+/* High contrast: re-declare the palette at its source.
+   The previous implementation used `filter: contrast(1.6)`, which pivots
+   each channel around mid-grey. On a palette this light that pushed the
+   faintest text *toward white* — the eyebrow labels dropped from 2.07:1
+   to 1.72:1 and the step numerals to 1.02:1. It degraded exactly the
+   text the user enabled it for.
+   Overriding the variables instead moves ink down and surfaces up, which
+   is the direction that actually helps. All body copy reaches AAA (7:1). */
+html.a11y-high-contrast {
+  /* Surfaces → lighter */
+  --c-off-white: 255 255 255;
+  --c-beige: 253 253 246;
+  --c-warm: 250 247 236;
+  --c-brown-faint: 252 250 248;
+  --c-brown: 26 22 20; /* dark panels → darker */
+
+  /* Accents. Direction depends on the surface each one sits on, so they do
+     NOT all move the same way:
+       · sage / sage-light carry text on the dark brown panel and footer.
+         Darkening them there would cut contrast, so they go *lighter*.
+       · sage-mid and clay appear only as borders, dividers and numerals on
+         light surfaces, so they go darker. */
+  --c-sage: 196 190 150; /* /75 on dark panel → 5.88:1 */
+  --c-sage-light: 226 226 205; /* /70 on dark → 7.22:1, /75 → 8.11:1 */
+  --c-sage-mid: 120 116 88; /* borders on light → 4.73:1 */
+  --c-clay: 138 106 60;
+  --c-clay-mid: 122 92 56;
+  --c-action: 92 26 42; /* deepened → cream on it: 12.4:1 */
+  --c-action-hover: 74 18 32;
+
+  /* Ink → AAA */
+  --c-sage-deep: 60 57 38;
+  --c-sage-btn: 60 57 38;
+  --c-sage-dark: 80 77 55;
+  --c-brown-mid: 45 38 34;
+  --c-brown-light: 62 53 47;
 }
 
 /* Reduce motion: disable ALL animations, transitions, and scroll smoothing */
@@ -128,8 +203,14 @@ html.a11y-reduce-motion *::after {
 }
 
 /* ─── Decorative Dot Pattern Background ─────────────────────────── */
+/* Dots follow the action colour so the hero reads as one accent family
+   rather than sage-background-plus-terracotta-button. */
 .bg-dot-pattern {
-  background-image: radial-gradient(circle, #b2ac8830 1px, transparent 1px);
+  background-image: radial-gradient(
+    circle,
+    rgb(var(--c-action) / 0.14) 1px,
+    transparent 1px
+  );
   background-size: 28px 28px;
 }
 

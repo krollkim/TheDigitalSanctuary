@@ -1,7 +1,8 @@
 'use client';
 
 import { useRef } from 'react';
-import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap';
+import { gsap, useGSAP } from '@/lib/gsap';
+import { revealCards } from '@/lib/animations';
 import {
   CalendarCheck,
   Smartphone,
@@ -81,12 +82,12 @@ function FeatureCard({ feature }: { feature: (typeof features)[0] }) {
         ${feature.size}
         relative group
         bg-white border border-sanctuary-sage-light
-        rounded-3xl p-7 sm:p-8 lg:p-10
+        rounded-3xl p-6 sm:p-7 lg:p-8
         shadow-sanctuary hover:shadow-sanctuary-md
         transition-all duration-500 overflow-hidden
         flex flex-col
         hover:-translate-y-1
-        ${isLarge ? 'min-h-[280px] sm:min-h-[320px]' : 'min-h-[180px] sm:min-h-[200px]'}
+        ${isLarge ? '' : 'min-h-[150px]'}
       `}
       aria-label={feature.title}
     >
@@ -106,7 +107,7 @@ function FeatureCard({ feature }: { feature: (typeof features)[0] }) {
         />
       )}
 
-      <div className="relative z-10 flex flex-col gap-4 h-full">
+      <div className="relative z-10 flex flex-col gap-4">
         {/* Icon */}
         <div
           className="inline-flex items-center justify-center
@@ -115,13 +116,13 @@ function FeatureCard({ feature }: { feature: (typeof features)[0] }) {
         >
           <Icon
             size={feature.iconSize}
-            className="text-sanctuary-sage-dark"
+            className="text-sanctuary-action"
             strokeWidth={1.5}
           />
         </div>
 
         {/* Text */}
-        <div className={`flex flex-col gap-2 ${isLarge ? 'max-w-sm' : ''}`}>
+        <div className={`flex flex-col gap-2 ${isLarge ? 'max-w-xl' : ''}`}>
           <h3
             className={`font-serif text-sanctuary-brown font-normal leading-snug
               ${isLarge ? 'text-2xl sm:text-3xl' : 'text-lg sm:text-xl'}`}
@@ -130,7 +131,7 @@ function FeatureCard({ feature }: { feature: (typeof features)[0] }) {
           </h3>
           <p
             className={`body-balanced text-sanctuary-brown-mid
-              ${isLarge ? 'text-base sm:text-lg' : 'text-sm sm:text-base'}`}
+              ${isLarge ? 'text-base sm:text-lg' : 'text-base'}`}
           >
             {feature.body}
           </p>
@@ -158,35 +159,26 @@ export default function Features() {
       scrollTrigger: { trigger: el, start: 'top 78%' },
     });
 
-    // Bento cards — per-element trigger via batch so each row animates
-    // when it individually enters the viewport (matches Framer whileInView)
-    ScrollTrigger.batch(el.querySelectorAll('.feat-card'), {
-      onEnter: (elements) => {
-        gsap.from(elements, {
-          opacity: 0,
-          y: 24,
-          duration: 0.75,
-          ease: 'power3.out',
-          stagger: 0.08,
-          force3D: true,
-        });
-      },
-      start: 'top 88%',
-      once: true,
-    });
+    // Bento cards — one trigger each so every row animates as it enters.
+    // These carry `transition-all`, which covers transform *and* opacity, so
+    // suspending it during the tween matters even more here.
+    revealCards(
+      Array.from(el.querySelectorAll<HTMLElement>('.feat-card')),
+      { columns: 3, stagger: 0.1 },
+    );
   }, { scope: sectionRef });
 
   return (
     <section
       ref={sectionRef}
       id="features"
-      className="py-28 sm:py-36 bg-sanctuary-off-white"
+      className="py-20 sm:py-24 bg-sanctuary-off-white"
       aria-labelledby="features-heading"
     >
       <div className="section-wrapper max-w-7xl mx-auto">
         {/* ─── Header ───────────────────────────────────────────────────────── */}
-        <div className="feat-header flex flex-col items-center text-center gap-5 mb-14 sm:mb-16">
-          <span className="label-tag text-sanctuary-sage">כלים ותכונות</span>
+        <div className="feat-header flex flex-col items-center text-center gap-5 mb-10 sm:mb-12">
+          <span className="label-tag text-sanctuary-brown-mid">כלים ותכונות</span>
           <h2
             id="features-heading"
             className="heading-section text-3xl sm:text-4xl lg:text-5xl

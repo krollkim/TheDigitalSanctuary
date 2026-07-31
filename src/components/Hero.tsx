@@ -24,10 +24,18 @@ const blobs = [
 ];
 
 // ─── Floating Abstract Shapes ─────────────────────────────────────────────────
+// A loose constellation rather than three lonely specks. Two things make a
+// scattered mark read as intentional instead of as dirt: enough presence to
+// register (below roughly 1.5:1 against the field it reads as a smudge — the
+// old 0.10–0.18 sat at 1.18–1.36), and a varied rhythm of size and spacing.
+// Sizes run 6px → 24px and the positions deliberately avoid an even grid.
 const floatingShapes = [
-  { size: 'w-3 h-3 sm:w-4 sm:h-4', pos: 'top-1/3 end-[12%] sm:end-[18%]', delay: '0s',   opacity: 'opacity-40' },
-  { size: 'w-2 h-2',               pos: 'top-2/3 start-[15%]',             delay: '1.2s', opacity: 'opacity-30' },
-  { size: 'w-5 h-5 sm:w-6 sm:h-6', pos: 'bottom-1/3 end-[22%] sm:end-[30%]', delay: '2.4s', opacity: 'opacity-20' },
+  { size: 'w-3 h-3 sm:w-4 sm:h-4',   pos: 'top-1/3 end-[12%] sm:end-[18%]',    delay: '0s',   opacity: 'opacity-[0.30]' },
+  { size: 'w-2 h-2',                 pos: 'top-2/3 start-[15%]',               delay: '1.2s', opacity: 'opacity-[0.26]' },
+  { size: 'w-5 h-5 sm:w-6 sm:h-6',   pos: 'bottom-1/3 end-[22%] sm:end-[30%]', delay: '2.4s', opacity: 'opacity-[0.20]' },
+  { size: 'w-1.5 h-1.5',             pos: 'top-[22%] start-[26%] sm:start-[30%]', delay: '0.6s', opacity: 'opacity-[0.30]' },
+  { size: 'w-2.5 h-2.5',             pos: 'bottom-[26%] start-[9%]',           delay: '3.0s', opacity: 'opacity-[0.22]' },
+  { size: 'w-1.5 h-1.5',             pos: 'top-[56%] end-[8%]',                delay: '1.8s', opacity: 'opacity-[0.28]' },
 ];
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -84,7 +92,7 @@ export default function Hero() {
         <div
           key={i}
           className={`absolute ${shape.pos} ${shape.size} ${shape.opacity}
-            rounded-full bg-sanctuary-sage animate-float`}
+            rounded-full bg-sanctuary-action animate-float`}
           style={{ animationDelay: shape.delay }}
           aria-hidden="true"
         />
@@ -97,8 +105,8 @@ export default function Hero() {
           {/* ─── Label Tag ───────────────────────────────────────────────────── */}
           <div className="hero-item">
             <span
-              className="inline-flex items-center gap-2 label-tag text-sanctuary-sage
-              bg-sanctuary-sage/10 border border-sanctuary-sage-light
+              className="inline-flex items-center gap-2 label-tag text-sanctuary-brown-mid
+              bg-sanctuary-action/10 border border-sanctuary-action/25
               px-4 py-2 rounded-full"
             >
               <Sparkles size={11} strokeWidth={2} aria-hidden="true" />
@@ -113,10 +121,10 @@ export default function Hero() {
           >
             מרחב דיגיטלי.{' '}
             <span className="relative inline-block">
-              <span className="relative z-10 text-sanctuary-sage-dark">שקט</span>
+              <span className="relative z-10 text-sanctuary-action">שקט</span>
               <span
                 className="absolute bottom-1 sm:bottom-2 start-0 end-0 h-2 sm:h-3
-                  bg-sanctuary-sage-light/50 rounded-sm -z-0"
+                  bg-sanctuary-action/22 rounded-sm -z-0"
                 aria-hidden="true"
               />
             </span>{' '}
@@ -185,13 +193,13 @@ export default function Hero() {
         onClick={handleScrollDown}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10
           flex flex-col items-center gap-2 text-sanctuary-brown-light
-          hover:text-sanctuary-sage transition-colors duration-300 group
-          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sanctuary-sage
+          hover:text-sanctuary-brown transition-colors duration-300 group
+          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sanctuary-action
           rounded-lg p-2"
         aria-label="גלול למטה"
       >
-        <span className="label-tag text-[10px]">גלילה</span>
-        <div className="animate-bounce group-hover:text-sanctuary-sage">
+        <span className="label-tag">גלילה</span>
+        <div className="animate-bounce group-hover:text-sanctuary-brown">
           <ArrowDown size={16} strokeWidth={1.5} aria-hidden="true" />
         </div>
       </button>

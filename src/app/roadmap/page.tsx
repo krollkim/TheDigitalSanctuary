@@ -49,7 +49,7 @@ const inputClass = `
   w-full bg-white border border-sanctuary-sage-light/70 rounded-2xl
   px-5 py-3.5 font-sans text-sm text-sanctuary-brown
   placeholder:text-sanctuary-brown-light
-  focus:outline-none focus:ring-2 focus:ring-sanctuary-sage/30 focus:border-sanctuary-sage
+  focus:outline-none focus:ring-2 focus:ring-sanctuary-action/30 focus:border-sanctuary-action
   transition-all duration-300
 `;
 
@@ -120,7 +120,7 @@ function LeadForm() {
     return (
       <div className="anim-panel-in flex flex-col items-center text-center gap-6 py-14">
         <div className="w-16 h-16 rounded-full bg-sanctuary-sage/12 border border-sanctuary-sage-light flex items-center justify-center">
-          <CheckCircle2 size={28} className="text-sanctuary-sage-dark" strokeWidth={1.5} />
+          <CheckCircle2 size={28} className="text-sanctuary-action" strokeWidth={1.5} />
         </div>
         <div className="flex flex-col gap-3 max-w-xs">
           <h3 className="font-serif text-2xl text-sanctuary-brown font-normal">הבקשה נשלחה</h3>
@@ -345,7 +345,7 @@ export default function RoadmapPage() {
           <Link
             href="/"
             className="flex items-center gap-1.5 font-sans text-xs text-sanctuary-brown-light
-              hover:text-sanctuary-sage-dark transition-colors duration-200"
+              hover:text-sanctuary-brown transition-colors duration-200"
           >
             <span>חזרה לאתר</span>
             <ExternalLink size={11} strokeWidth={1.5} />
@@ -374,7 +374,7 @@ export default function RoadmapPage() {
             px-8 py-12 sm:py-14
             border border-white/50 shadow-sanctuary">
               <span
-                className="hero-item inline-flex items-center gap-2 label-tag text-sanctuary-sage
+                className="hero-item inline-flex items-center gap-2 label-tag text-sanctuary-brown-mid
                   bg-sanctuary-sage/10 border border-sanctuary-sage-light px-4 py-2 rounded-full"
               >
                 <Sparkles size={11} aria-hidden="true" />
@@ -422,7 +422,7 @@ export default function RoadmapPage() {
           <div className="max-w-2xl mx-auto px-6 sm:px-10">
             <div className="flex flex-col gap-10">
               <div className="val-item flex flex-col items-center text-center gap-4">
-                <span className="label-tag text-sanctuary-sage">אם זה נשמע מוכר</span>
+                <span className="label-tag text-sanctuary-brown-mid">אם זה נשמע מוכר</span>
                 <h2 className="font-serif text-3xl sm:text-4xl text-sanctuary-brown font-light">
                   אתם לא לבד.
                 </h2>
@@ -463,7 +463,7 @@ export default function RoadmapPage() {
           <div className="max-w-2xl mx-auto px-6 sm:px-10">
             <div className="flex flex-col gap-12">
               <div className="proc-item flex flex-col items-center text-center gap-4">
-                <span className="label-tag text-sanctuary-sage">תהליך פשוט</span>
+                <span className="label-tag text-sanctuary-brown-mid">תהליך פשוט</span>
                 <h2 className="font-serif text-3xl sm:text-4xl text-sanctuary-brown font-light">
                   שלושה שלבים. ללא הפתעות.
                 </h2>
@@ -474,7 +474,7 @@ export default function RoadmapPage() {
                 {steps.map((step, i) => (
                   <div key={step.number} className="proc-item flex gap-6 items-start">
                     <div className="flex flex-col items-center flex-shrink-0">
-                      <span className="font-serif text-3xl text-sanctuary-sage-light font-light leading-none">
+                      <span className="font-serif text-3xl text-sanctuary-action/65 font-light leading-none">
                         {step.number}
                       </span>
                       {i < steps.length - 1 && (
@@ -482,7 +482,7 @@ export default function RoadmapPage() {
                       )}
                     </div>
                     <div className="flex flex-col gap-2 pt-1">
-                      <span className="label-tag text-sanctuary-sage text-[10px]">{step.label}</span>
+                      <span className="label-tag text-sanctuary-brown-mid text-[10px]">{step.label}</span>
                       <h3 className="font-serif text-xl sm:text-2xl text-sanctuary-brown font-normal">
                         {step.heading}
                       </h3>
@@ -509,7 +509,7 @@ export default function RoadmapPage() {
           <div className="max-w-2xl mx-auto px-6 sm:px-10">
             <div className="flex flex-col gap-10">
               <div className="form-item flex flex-col items-center text-center gap-4">
-                <span className="label-tag text-sanctuary-sage">הצעד הראשון</span>
+                <span className="label-tag text-sanctuary-brown-mid">הצעד הראשון</span>
                 <h2 className="font-serif text-3xl sm:text-4xl text-sanctuary-brown font-light">
                   בואו נשרטט את מפת הדרכים שלך -
                   <span className="relative inline-block mx-1">
@@ -552,14 +552,14 @@ export default function RoadmapPage() {
             <Link
               href="/privacy"
               className="font-sans text-xs text-sanctuary-brown-light
-                hover:text-sanctuary-sage-dark transition-colors duration-200"
+                hover:text-sanctuary-brown transition-colors duration-200"
             >
               מדיניות פרטיות
             </Link>
             <Link
               href="/"
               className="font-sans text-xs text-sanctuary-brown-light
-                hover:text-sanctuary-sage-dark transition-colors duration-200"
+                hover:text-sanctuary-brown transition-colors duration-200"
             >
               האתר הראשי
             </Link>

@@ -14,9 +14,9 @@ const steps = [
     body: 'שיחה קצרה ללא מחויבות. אנחנו שואלים, מקשיבים, ומבינים את הפרקטיקה, הערכים, והמטופלים שלכם - לפני שמזיזים פיקסל אחד.',
     accent: 'bg-white border-sanctuary-sage-light',
     iconBg: 'bg-sanctuary-sage/12',
-    iconColor: 'text-sanctuary-sage-dark',
-    numberColor: 'text-sanctuary-sage-light',
-    labelColor: 'bg-sanctuary-sage/10 text-sanctuary-sage-dark',
+    iconColor: 'text-sanctuary-action',
+    numberColor: 'text-sanctuary-action/65',
+    labelColor: 'bg-sanctuary-sage/10 text-sanctuary-brown-mid',
     size: 'md:col-span-1',
   },
   {
@@ -27,8 +27,8 @@ const steps = [
     body: 'אין תבניות. אין קיצורי דרך. כל החלטת עיצוב, כותרת, ומבנה עמוד מתקבלת דרך שאלה אחת: "האם זה גורם למטופל להרגיש בטוח?" אנחנו בונים חוויה דיגיטלית שמשקפת אתכם בדיוק - את הערכים, הגישה הטיפולית, והאנשים שאתם עוזרים להם.',
     accent: 'bg-white border-sanctuary-warm',
     iconBg: 'bg-sanctuary-warm',
-    iconColor: 'text-sanctuary-brown-mid',
-    numberColor: 'text-sanctuary-clay/40',
+    iconColor: 'text-sanctuary-action',
+    numberColor: 'text-sanctuary-action/65',
     labelColor: 'bg-sanctuary-warm text-sanctuary-brown-mid',
     size: 'md:col-span-2',
   },
@@ -108,7 +108,7 @@ export default function Process() {
 
         {/* ─── Header ───────────────────────────────────────────────────────── */}
         <div className="proc-header flex flex-col items-center text-center gap-5 mb-14 sm:mb-16">
-          <span className="label-tag text-sanctuary-sage">התהליך שלנו</span>
+          <span className="label-tag text-sanctuary-brown-mid">התהליך שלנו</span>
           <h2
             id="process-heading"
             className="heading-section text-3xl sm:text-4xl lg:text-5xl
@@ -139,7 +139,7 @@ export default function Process() {
               >
                 {/* Top row: label + number */}
                 <div className="flex items-center justify-between">
-                  <span className={`label-tag text-[10px] px-3 py-1.5 rounded-full ${step.labelColor}`}>
+                  <span className={`label-tag text-xs px-3 py-1.5 rounded-full ${step.labelColor}`}>
                     {step.label}
                   </span>
                   <span className={`font-serif text-3xl font-light ${step.numberColor}`}>
@@ -163,7 +163,7 @@ export default function Process() {
                   <h3 className="font-serif text-xl sm:text-2xl text-sanctuary-brown font-normal">
                     {step.title}
                   </h3>
-                  <p className="body-balanced text-sm sm:text-base text-sanctuary-brown-mid leading-relaxed">
+                  <p className="body-balanced text-base text-sanctuary-brown-mid leading-relaxed">
                     {step.body}
                   </p>
                 </div>
@@ -191,10 +191,10 @@ export default function Process() {
 
             {/* Left: label + number */}
             <div className="flex items-center gap-4 md:flex-col md:items-start md:gap-2">
-              <span className="label-tag text-[10px] px-3 py-1.5 rounded-full bg-sanctuary-sage/20 text-sanctuary-sage-light">
+              <span className="label-tag text-xs px-3 py-1.5 rounded-full bg-sanctuary-beige/12 text-sanctuary-beige/85">
                 שלב שלישי
               </span>
-              <span className="font-serif text-4xl font-light text-sanctuary-sage/30">
+              <span className="font-serif text-4xl font-light text-sanctuary-beige/45">
                 03
               </span>
             </div>
@@ -205,13 +205,13 @@ export default function Process() {
                 className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-sanctuary-sage/15"
                 aria-hidden="true"
               >
-                <Rocket size={22} className="text-sanctuary-sage-light" strokeWidth={1.5} />
+                <Rocket size={22} className="text-sanctuary-beige/85" strokeWidth={1.5} />
               </div>
               <div className="flex flex-col gap-2">
                 <h3 className="font-serif text-2xl sm:text-3xl text-sanctuary-beige font-normal">
                   השקה וליווי - ואנחנו לא נעלמים
                 </h3>
-                <p className="body-balanced text-sm sm:text-base text-sanctuary-beige/60 leading-relaxed max-w-lg">
+                <p className="body-balanced text-base text-sanctuary-beige/60 leading-relaxed max-w-lg">
                   מקבלים אתר חי, מהיר ומוכן לאפיק פניות. אחרי ההשקה - אנחנו
                   שותפים לדרך: תמיכה שוטפת, עדכונים, ושיפורים שנבנים עם הפרקטיקה שלכם.
                 </p>
@@ -226,16 +226,7 @@ export default function Process() {
                   e.preventDefault();
                   document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="
-                  inline-flex items-center gap-3
-                  bg-sanctuary-sage text-sanctuary-off-white
-                  px-8 py-4 rounded-full
-                  font-sans font-medium text-sm tracking-wide
-                  transition-all duration-300 ease-sanctuary
-                  hover:bg-sanctuary-sage-dark hover:shadow-sanctuary-md hover:-translate-y-0.5
-                  focus-visible:ring-2 focus-visible:ring-sanctuary-sage focus-visible:ring-offset-2
-                  whitespace-nowrap
-                "
+                className="btn-primary whitespace-nowrap"
               >
                 בואו נתחיל
               </a>

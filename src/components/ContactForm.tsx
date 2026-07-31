@@ -46,7 +46,7 @@ const inputClass = `
   w-full bg-white border border-sanctuary-sage-light rounded-2xl
   px-5 py-3.5 font-sans text-sm text-sanctuary-brown
   placeholder:text-sanctuary-brown-light
-  focus:outline-none focus:ring-2 focus:ring-sanctuary-sage/40 focus:border-sanctuary-sage
+  focus:outline-none focus:ring-2 focus:ring-sanctuary-action/40 focus:border-sanctuary-action
   transition-all duration-300
 `;
 
@@ -64,7 +64,7 @@ function SuccessPanel() {
       >
         <CheckCircle2
           size={28}
-          className="text-sanctuary-sage-dark"
+          className="text-sanctuary-action"
           strokeWidth={1.5}
           aria-hidden="true"
         />
@@ -73,7 +73,7 @@ function SuccessPanel() {
         <h3 className="font-serif text-2xl text-sanctuary-brown font-normal">
           ההודעה הגיעה אלינו בשלום
         </h3>
-        <p className="body-balanced text-sanctuary-brown-mid text-sm sm:text-base max-w-xs mx-auto">
+        <p className="body-balanced text-sanctuary-brown-mid text-base max-w-xs mx-auto">
           קראנו, שמענו, ונחזור אליכם בשקט - בדרך כלל תוך יום עסקי אחד.
         </p>
       </div>
@@ -104,7 +104,7 @@ function ErrorPanel({ onRetry }: { onRetry: () => void }) {
         <h3 className="font-serif text-2xl text-sanctuary-brown font-normal">
           משהו לא הלך כשורה
         </h3>
-        <p className="body-balanced text-sanctuary-brown-mid text-sm sm:text-base max-w-xs mx-auto">
+        <p className="body-balanced text-sanctuary-brown-mid text-base max-w-xs mx-auto">
           ההודעה לא נשלחה הפעם. ניתן לנסות שוב, או לפנות אלינו ישירות בטלפון.
         </p>
       </div>
@@ -241,7 +241,7 @@ export default function ContactForm() {
 
         {/* ─── Header ─────────────────────────────────────────────────────────── */}
         <div className="cf-header flex flex-col items-center text-center gap-5 mb-12 sm:mb-14">
-          <span className="label-tag text-sanctuary-sage">דברו איתנו</span>
+          <span className="label-tag text-sanctuary-brown-mid">דברו איתנו</span>
           <h2
             id="contact-heading"
             className="heading-section text-3xl sm:text-4xl lg:text-5xl
@@ -257,7 +257,7 @@ export default function ContactForm() {
 
           {/* Trust signal */}
           <div
-            className="flex items-center gap-1.5 text-sanctuary-sage-dark"
+            className="flex items-center gap-1.5 text-sanctuary-brown-mid"
             aria-label="אבטחת מידע"
           >
             <Lock size={12} strokeWidth={2} aria-hidden="true" />
@@ -403,8 +403,8 @@ export default function ContactForm() {
           מעדיפים לדבר?{' '}
           <a
             href="tel:+972525890252"
-            className="text-sanctuary-sage-dark underline underline-offset-2
-              hover:text-sanctuary-sage transition-colors duration-200"
+            className="text-sanctuary-brown-mid underline underline-offset-2
+              hover:text-sanctuary-brown transition-colors duration-200"
           >
             052-589-0252
           </a>
@@ -413,8 +413,8 @@ export default function ContactForm() {
             href="https://wa.me/972525890252"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sanctuary-sage-dark underline underline-offset-2
-              hover:text-sanctuary-sage transition-colors duration-200"
+            className="text-sanctuary-brown-mid underline underline-offset-2
+              hover:text-sanctuary-brown transition-colors duration-200"
           >
             WhatsApp
           </a>

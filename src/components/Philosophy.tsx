@@ -1,7 +1,8 @@
 'use client';
 
 import { useRef } from 'react';
-import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap';
+import { gsap, useGSAP } from '@/lib/gsap';
+import { revealCards } from '@/lib/animations';
 import { Feather, Palette, MessageSquareHeart } from 'lucide-react';
 
 // ─── Philosophy Cards Data ────────────────────────────────────────────────────
@@ -12,7 +13,7 @@ const cards = [
     body: 'אתר עמוס עם אלמנטים מתחרים יוצר חרדה. מרחב נקי, אוורירי ומסודר שולח מסר ברור: "אתה בטוח כאן." ביטחון הוא הצעד הראשון לפנייה לעזרה.',
     accent: 'bg-sanctuary-sage/10 border-sanctuary-sage-light',
     iconBg: 'bg-sanctuary-sage/15',
-    iconColor: 'text-sanctuary-sage-dark',
+    iconColor: 'text-sanctuary-action',
   },
   {
     icon: Palette,
@@ -20,7 +21,7 @@ const cards = [
     body: 'פלטת הגוונים החמים והאדמתיים שלנו אינה אסתטיקה בלבד - היא מבוססת על מחקר פסיכולוגי. גוונים אלו מפעילים את מערכת העצבים הפאראסימפתטית ומאפשרים נשימה.',
     accent: 'bg-sanctuary-clay/10 border-sanctuary-clay/30',
     iconBg: 'bg-sanctuary-clay/15',
-    iconColor: 'text-sanctuary-brown-mid',
+    iconColor: 'text-sanctuary-action',
   },
   {
     icon: MessageSquareHeart,
@@ -28,7 +29,7 @@ const cards = [
     body: 'כל משפט, כל כפתור, כל כותרת - נכתבו בשפה שמפחיתה חרדה ומגבירה את הנכונות לפנות לעזרה. כי "צרו קשר" מרגיש אחרת מ"בואו נדבר."',
     accent: 'bg-sanctuary-warm/60 border-sanctuary-warm',
     iconBg: 'bg-sanctuary-sage-light/40',
-    iconColor: 'text-sanctuary-sage-dark',
+    iconColor: 'text-sanctuary-action',
   },
 ];
 
@@ -51,21 +52,12 @@ export default function Philosophy() {
       scrollTrigger: trigger,
     });
 
-    // Cards — per-element trigger via batch
-    ScrollTrigger.batch(el.querySelectorAll('.phil-card'), {
-      onEnter: (elements) => {
-        gsap.from(elements, {
-          opacity: 0,
-          y: 24,
-          duration: 0.75,
-          ease: 'power3.out',
-          stagger: 0.1,
-          force3D: true,
-        });
-      },
-      start: 'top 88%',
-      once: true,
-    });
+    // Cards — one trigger each, with the hover transition suspended during
+    // the tween (see revealCards).
+    revealCards(
+      Array.from(el.querySelectorAll<HTMLElement>('.phil-card')),
+      { columns: 3 },
+    );
 
     // Blockquote
     gsap.from(el.querySelector('.phil-quote'), {
@@ -95,7 +87,7 @@ export default function Philosophy() {
       <div className="section-wrapper max-w-7xl mx-auto relative z-10">
         {/* ─── Section Header ─────────────────────────────────────────────── */}
         <div className="phil-header flex flex-col items-center text-center gap-5 mb-16 sm:mb-20">
-          <span className="label-tag text-sanctuary-sage">הפילוסופיה שלנו</span>
+          <span className="label-tag text-sanctuary-brown-mid">הפילוסופיה שלנו</span>
 
           <h2
             id="philosophy-heading"
@@ -146,7 +138,7 @@ export default function Philosophy() {
                   <h3 className="font-serif text-xl text-sanctuary-brown font-normal">
                     {card.title}
                   </h3>
-                  <p className="body-balanced text-sm sm:text-base text-sanctuary-brown-mid leading-relaxed">
+                  <p className="body-balanced text-base text-sanctuary-brown-mid leading-relaxed">
                     {card.body}
                   </p>
                 </div>
@@ -159,14 +151,14 @@ export default function Philosophy() {
         <blockquote className="phil-quote mt-20 text-center">
           <p
             className="font-serif text-xl sm:text-2xl text-sanctuary-brown-mid
-              font-light italic max-w-2xl mx-auto leading-relaxed"
+              font-normal italic max-w-2xl mx-auto leading-relaxed"
           >
             &ldquo;האתר שלך הוא חדר ההמתנה הדיגיטלי שלך - וכמו בחדר ההמתנה האמיתי,
             כל פרט קטן שולח מסר למטופל.&rdquo;
           </p>
           <footer className="mt-4">
-            <cite className="label-tag text-sanctuary-sage not-italic">
-              - הצוות שלנו, The Digital Sanctuary
+            <cite className="label-tag text-sanctuary-brown-mid not-italic">
+            The Digital Sanctuary - הצוות שלנו
             </cite>
           </footer>
         </blockquote>

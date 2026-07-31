@@ -16,14 +16,14 @@ export default function PrivacyPage() {
         <Link
           href="/"
           className="inline-flex items-center gap-2 font-sans text-sm text-sanctuary-brown-light
-            hover:text-sanctuary-sage-dark transition-colors duration-200 mb-12"
+            hover:text-sanctuary-brown transition-colors duration-200 mb-12"
         >
           ← חזרה לעמוד הבית
         </Link>
 
         {/* Header */}
         <div className="flex flex-col gap-4 mb-12">
-          <span className="font-sans text-xs font-medium tracking-widest uppercase text-sanctuary-sage">
+          <span className="font-sans text-xs font-medium tracking-widest uppercase text-sanctuary-brown-mid">
             מסמך משפטי
           </span>
           <h1 className="font-serif text-4xl sm:text-5xl text-sanctuary-brown font-light tracking-wide">
@@ -43,7 +43,7 @@ export default function PrivacyPage() {
             <p className="text-sm sm:text-base">
               The Digital Sanctuary, המופעל על ידי Smiley Solution, הוא שירות לבניית נוכחות דיגיטלית
               לפרקטיקות טיפוליות. כתובת: ישראל. ליצירת קשר:{' '}
-              <a href="mailto:krollkimdev@gmail.com" className="text-sanctuary-sage-dark underline underline-offset-2">
+              <a href="mailto:krollkimdev@gmail.com" className="text-sanctuary-brown-mid underline underline-offset-2">
                 krollkimdev@gmail.com
               </a>
             </p>
@@ -78,7 +78,7 @@ export default function PrivacyPage() {
             <p className="text-sm sm:text-base">
               בהתאם לחוק הגנת הפרטיות הישראלי ולתקנות GDPR (ככל שחלות), יש לכם זכות לעיין,
               לתקן, או לבקש מחיקה של המידע שלכם. לכל פנייה:{' '}
-              <a href="mailto:krollkimdev@gmail.com" className="text-sanctuary-sage-dark underline underline-offset-2">
+              <a href="mailto:krollkimdev@gmail.com" className="text-sanctuary-brown-mid underline underline-offset-2">
                 krollkimdev@gmail.com
               </a>
             </p>

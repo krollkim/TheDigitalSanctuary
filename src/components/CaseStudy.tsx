@@ -12,7 +12,7 @@ const values = [
     body: 'נתוני המטופלים שלכם מוגנים בהתאם לתקנות הפרטיות המחמירות ביותר. פרטיות היא לא תכונה - היא עמוד השדרה של המוצר.',
     accent: 'bg-sanctuary-sage/8 border-sanctuary-sage-light',
     iconBg: 'bg-sanctuary-sage/12',
-    iconColor: 'text-sanctuary-sage-dark',
+    iconColor: 'text-sanctuary-action',
   },
   {
     icon: Feather,
@@ -20,7 +20,7 @@ const values = [
     body: 'כל פרט - מרווח, צבע, פונט - נבחר על בסיס מחקר פסיכולוגי. המטרה: להפחית חרדה לפני שהמטופל כותב מילה אחת.',
     accent: 'bg-sanctuary-warm/60 border-sanctuary-warm',
     iconBg: 'bg-sanctuary-warm',
-    iconColor: 'text-sanctuary-brown-mid',
+    iconColor: 'text-sanctuary-action',
   },
   {
     icon: HeadphonesIcon,
@@ -28,7 +28,7 @@ const values = [
     body: 'אנחנו לא נעלמים אחרי ההשקה. אנחנו שותפים לטווח ארוך - עם תמיכה, עדכונים, ושיפורים שמשאירים אתכם ממוקדים בקשר הטיפולי.',
     accent: 'bg-sanctuary-clay/8 border-sanctuary-clay/30',
     iconBg: 'bg-sanctuary-clay/12',
-    iconColor: 'text-sanctuary-clay',
+    iconColor: 'text-sanctuary-action',
   },
 ];
 
@@ -42,7 +42,7 @@ export default function CaseStudy() {
       number: '01',
       heading: 'לתרגם חזון - לא רק לכתוב קוד',
       body: 'א׳ ידעה בדיוק מה היא רוצה להעניק לנשים שמגיעות אליה. האתגר היה למצוא מישהו שיבין את העולם הרגשי שלה ויתרגם אותו לשפה דיגיטלית - מבלי לאבד את הנשמה בדרך.',
-      color: 'bg-sanctuary-sage/10 text-sanctuary-sage-dark',
+      color: 'bg-sanctuary-sage/10 text-sanctuary-brown-mid',
       borderColor: 'border-sanctuary-sage-light',
     },
     {
@@ -159,10 +159,10 @@ export default function CaseStudy() {
               `}
             >
               <div className="flex items-center gap-3">
-                <span className={`label-tag text-[10px] px-3 py-1.5 rounded-full ${step.color}`}>
+                <span className={`label-tag text-xs px-3 py-1.5 rounded-full ${step.color}`}>
                   {step.label}
                 </span>
-                <span className="font-serif text-3xl text-sanctuary-sage-light font-light">
+                <span className="font-serif text-3xl text-sanctuary-action/65 font-light">
                   {step.number}
                 </span>
               </div>
@@ -170,7 +170,7 @@ export default function CaseStudy() {
                 <h3 className="font-serif text-xl sm:text-2xl text-sanctuary-brown font-normal">
                   {step.heading}
                 </h3>
-                <p className="body-balanced text-sm sm:text-base text-sanctuary-brown-mid">
+                <p className="body-balanced text-base text-sanctuary-brown-mid">
                   {step.body}
                 </p>
               </div>
@@ -180,7 +180,7 @@ export default function CaseStudy() {
 
         {/* ─── Values ───────────────────────────────────────────────────────── */}
         <div className="cs-values-section mb-14 sm:mb-16">
-          <p className="label-tag text-sanctuary-sage text-center mb-8">
+          <p className="label-tag text-sanctuary-brown-mid text-center mb-8">
             הערכים שמנחים כל החלטה
           </p>
 
@@ -228,11 +228,11 @@ export default function CaseStudy() {
           >
             <Quote
               size={32}
-              className="text-sanctuary-sage-light mx-auto mb-6 rotate-180"
+              className="text-sanctuary-action/35 mx-auto mb-6 rotate-180"
               strokeWidth={1}
               aria-hidden="true"
             />
-            <p className="font-serif text-lg sm:text-xl text-sanctuary-brown font-light italic leading-relaxed">
+            <p className="font-serif text-lg sm:text-xl text-sanctuary-brown font-normal italic leading-relaxed">
               &ldquo;חיפשתי מישהו שיוביל אותי יד ביד דרך הפחד מטכנולוגיה. הליווי האישי
               והדיוק של The Digital Sanctuary גרמו לי להרגיש בטוחה לקפוץ למים.
               היום יש לי אתר שמייצג אותי באמת ועוזר לי להגיע לנשים שזקוקות לי.&rdquo;
@@ -241,7 +241,7 @@ export default function CaseStudy() {
               <cite className="font-sans text-sm font-medium text-sanctuary-brown not-italic">
                 א&apos;
               </cite>
-              <span className="label-tag text-sanctuary-sage text-[10px]">
+              <span className="label-tag text-sanctuary-brown-mid text-xs">
                 מרחב לריפוי רגשי וליווי נשים
               </span>
             </footer>

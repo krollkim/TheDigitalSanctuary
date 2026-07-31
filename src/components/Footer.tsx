@@ -76,23 +76,23 @@ export default function Footer() {
               <span className="font-serif text-xl text-sanctuary-beige tracking-wider">
                 The Digital Sanctuary
               </span>
-              <span className="label-tag text-sanctuary-sage-light/60 text-[10px]">
+              <span className="label-tag text-sanctuary-beige/70">
                 by Smiley Solution
               </span>
             </div>
-            <p className="body-balanced text-sm text-sanctuary-beige/50 max-w-sm leading-relaxed">
+            <p className="body-balanced text-sm text-sanctuary-beige/75 max-w-sm leading-relaxed">
               פתרונות דיגיטליים לפרקטיקות טיפוליות שמאמינות שהחוויה הדיגיטלית
               היא חלק בלתי נפרד מהחוויה הטיפולית.
             </p>
             <div className="w-10 h-px bg-sanctuary-sage/30" aria-hidden="true" />
-            <p className="font-sans text-xs text-sanctuary-beige/30">
+            <p className="font-sans text-xs text-sanctuary-beige/60">
               עיצוב שנולד מתוך הקשבה.
             </p>
           </div>
 
           {/* ─── Service Links ───────────────────────────────────────────────── */}
           <div className="footer-col flex flex-col gap-5">
-            <h3 className="font-sans text-xs font-medium text-sanctuary-sage-light/70 tracking-widest uppercase">
+            <h3 className="font-sans text-xs font-medium text-sanctuary-beige/65 tracking-wide uppercase">
               {footerLinks.service.title}
             </h3>
             <nav aria-label="קישורי שירות" className="flex flex-col gap-3">
@@ -101,7 +101,7 @@ export default function Footer() {
                   key={item.label}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className="font-sans text-sm text-sanctuary-beige/50
+                  className="font-sans text-sm text-sanctuary-beige/75
                     hover:text-sanctuary-beige/90 transition-colors duration-200"
                 >
                   {item.label}
@@ -112,7 +112,7 @@ export default function Footer() {
 
           {/* ─── Contact Links ───────────────────────────────────────────────── */}
           <div className="footer-col flex flex-col gap-5">
-            <h3 className="font-sans text-xs font-medium text-sanctuary-sage-light/70 tracking-widest uppercase">
+            <h3 className="font-sans text-xs font-medium text-sanctuary-beige/65 tracking-wide uppercase">
               {footerLinks.contact.title}
             </h3>
             <nav aria-label="קישורי יצירת קשר" className="flex flex-col gap-3">
@@ -121,7 +121,7 @@ export default function Footer() {
                   key={item.label}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className="font-sans text-sm text-sanctuary-beige/50
+                  className="font-sans text-sm text-sanctuary-beige/75
                     hover:text-sanctuary-beige/90 transition-colors duration-200
                     break-all"
                 >
@@ -137,21 +137,21 @@ export default function Footer() {
           className="footer-bottom mt-14 pt-8 border-t border-sanctuary-beige/10
             flex flex-col sm:flex-row items-center justify-between gap-4"
         >
-          <p className="font-sans text-xs text-sanctuary-beige/30">
+          <p className="font-sans text-xs text-sanctuary-beige/60">
             © {year} The Digital Sanctuary by Smiley Solution. כל הזכויות שמורות.
           </p>
           <div className="flex items-center gap-6">
             <a
               href="/privacy"
-              className="font-sans text-xs text-sanctuary-beige/30
-                hover:text-sanctuary-beige/60 transition-colors duration-200"
+              className="font-sans text-xs text-sanctuary-beige/60
+                hover:text-sanctuary-beige/90 transition-colors duration-200"
             >
               מדיניות פרטיות
             </a>
             <a
               href="/terms"
-              className="font-sans text-xs text-sanctuary-beige/30
-                hover:text-sanctuary-beige/60 transition-colors duration-200"
+              className="font-sans text-xs text-sanctuary-beige/60
+                hover:text-sanctuary-beige/90 transition-colors duration-200"
             >
               תנאי שימוש
             </a>

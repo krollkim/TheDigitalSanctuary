@@ -16,14 +16,14 @@ export default function TermsPage() {
         <Link
           href="/"
           className="inline-flex items-center gap-2 font-sans text-sm text-sanctuary-brown-light
-            hover:text-sanctuary-sage-dark transition-colors duration-200 mb-12"
+            hover:text-sanctuary-brown transition-colors duration-200 mb-12"
         >
           ← חזרה לעמוד הבית
         </Link>
 
         {/* Header */}
         <div className="flex flex-col gap-4 mb-12">
-          <span className="font-sans text-xs font-medium tracking-widest uppercase text-sanctuary-sage">
+          <span className="font-sans text-xs font-medium tracking-widest uppercase text-sanctuary-brown-mid">
             מסמך משפטי
           </span>
           <h1 className="font-serif text-4xl sm:text-5xl text-sanctuary-brown font-light tracking-wide">
@@ -89,7 +89,7 @@ export default function TermsPage() {
             <h2 className="font-serif text-xl text-sanctuary-brown font-normal">7. יצירת קשר</h2>
             <p className="text-sm sm:text-base">
               לשאלות לגבי תנאים אלו:{' '}
-              <a href="mailto:krollkimdev@gmail.com" className="text-sanctuary-sage-dark underline underline-offset-2">
+              <a href="mailto:krollkimdev@gmail.com" className="text-sanctuary-brown-mid underline underline-offset-2">
                 krollkimdev@gmail.com
               </a>
             </p>

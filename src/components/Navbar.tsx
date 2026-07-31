@@ -100,10 +100,10 @@ export default function Navbar() {
               className="flex flex-col items-end gap-0.5 group focus-visible:outline-none"
               aria-label="The Digital Sanctuary - עמוד הבית"
             >
-              <span className="font-serif text-lg text-sanctuary-brown tracking-wider group-hover:text-sanctuary-sage-dark transition-colors duration-300">
+              <span className="font-serif text-lg text-sanctuary-brown tracking-wider group-hover:text-sanctuary-brown transition-colors duration-300">
                 The Digital Sanctuary
               </span>
-              <span className="label-tag text-sanctuary-brown-light text-[10px] group-hover:text-sanctuary-sage transition-colors duration-300">
+              <span className="label-tag text-sanctuary-brown-light text-[10px] group-hover:text-sanctuary-brown transition-colors duration-300">
                 by Smiley Solution
               </span>
             </a>
@@ -115,7 +115,7 @@ export default function Navbar() {
                   key={item.href}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className="font-sans text-sm font-light text-sanctuary-brown-mid
+                  className="font-sans text-sm font-normal text-sanctuary-brown-mid
                     relative after:absolute after:bottom-0 after:end-0 after:h-px after:w-0
                     after:bg-sanctuary-sage after:transition-all after:duration-300
                     hover:after:w-full hover:text-sanctuary-brown
@@ -141,7 +141,7 @@ export default function Navbar() {
             <button
               className="lg:hidden p-2 text-sanctuary-brown-mid hover:text-sanctuary-brown
                 transition-colors duration-200 rounded-lg focus-visible:outline-none
-                focus-visible:ring-2 focus-visible:ring-sanctuary-sage"
+                focus-visible:ring-2 focus-visible:ring-sanctuary-action"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-expanded={mobileOpen}
               aria-controls="mobile-menu"
@@ -169,7 +169,7 @@ export default function Navbar() {
               key={item.href}
               href={item.href}
               onClick={(e) => handleNavClick(e, item.href)}
-              className="font-sans text-base font-light text-sanctuary-brown-mid
+              className="font-sans text-base font-normal text-sanctuary-brown-mid
                 hover:text-sanctuary-brown hover:bg-sanctuary-beige/60
                 py-3 px-4 rounded-xl transition-all duration-200 block"
             >
