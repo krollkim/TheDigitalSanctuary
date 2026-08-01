@@ -59,7 +59,7 @@ function SuccessPanel() {
       aria-live="polite"
     >
       <div
-        className="w-16 h-16 rounded-full bg-sanctuary-sage/12
+        className="w-16 h-16 rounded-full bg-sanctuary-sage/10
           border border-sanctuary-sage-light flex items-center justify-center"
       >
         <CheckCircle2
@@ -228,7 +228,7 @@ export default function ContactForm() {
       {/* Decorative blobs */}
       <div
         className="absolute top-0 end-0 w-72 h-72 rounded-full
-          bg-sanctuary-sage/8 blur-3xl translate-x-1/3 -translate-y-1/3"
+          bg-sanctuary-sage/10 blur-3xl translate-x-1/3 -translate-y-1/3"
         aria-hidden="true"
       />
       <div

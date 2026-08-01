@@ -80,7 +80,7 @@ export default function Philosophy() {
       {/* ─── Decorative Shape ──────────────────────────────────────────────── */}
       <div
         className="absolute top-0 start-0 w-64 h-64 rounded-full
-          bg-sanctuary-sage/8 blur-3xl -translate-y-1/2 -translate-x-1/4"
+          bg-sanctuary-sage/10 blur-3xl -translate-y-1/2 -translate-x-1/4"
         aria-hidden="true"
       />
 

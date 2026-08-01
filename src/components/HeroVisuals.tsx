@@ -105,7 +105,13 @@ export function HeroVisuals() {
   }, [isMobile]);
 
   return (
-    <div className="hidden sm:block absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
+    // Colour comes from `currentColor` so the mandala follows the palette
+    // token rather than a hard-coded hex — which also means it responds to
+    // the high-contrast accessibility mode, something the old #b3ac88 never did.
+    <div
+      className="hidden sm:block absolute inset-0 z-0 pointer-events-none text-sanctuary-action"
+      aria-hidden="true"
+    >
       <svg
         width="100%"
         height="100%"
@@ -136,8 +142,8 @@ export function HeroVisuals() {
           {/* Rotation wrapper */}
           <g
             ref={rotRef}
-            stroke="#b3ac88"
-            fill="#b3ac88"
+            stroke="currentColor"
+            fill="currentColor"
             strokeLinecap="round"
             strokeLinejoin="round"
             style={{ willChange: 'transform' }}

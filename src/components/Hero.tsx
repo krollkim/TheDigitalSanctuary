@@ -124,7 +124,7 @@ export default function Hero() {
               <span className="relative z-10 text-sanctuary-action">שקט</span>
               <span
                 className="absolute bottom-1 sm:bottom-2 start-0 end-0 h-2 sm:h-3
-                  bg-sanctuary-action/22 rounded-sm -z-0"
+                  bg-sanctuary-action/20 rounded-sm -z-0"
                 aria-hidden="true"
               />
             </span>{' '}

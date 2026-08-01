@@ -10,8 +10,8 @@ const values = [
     icon: ShieldCheck,
     title: 'פרטיות מוחלטת',
     body: 'נתוני המטופלים שלכם מוגנים בהתאם לתקנות הפרטיות המחמירות ביותר. פרטיות היא לא תכונה - היא עמוד השדרה של המוצר.',
-    accent: 'bg-sanctuary-sage/8 border-sanctuary-sage-light',
-    iconBg: 'bg-sanctuary-sage/12',
+    accent: 'bg-sanctuary-sage/10 border-sanctuary-sage-light',
+    iconBg: 'bg-sanctuary-sage/10',
     iconColor: 'text-sanctuary-action',
   },
   {
@@ -26,8 +26,8 @@ const values = [
     icon: HeadphonesIcon,
     title: 'ליווי אישי לאורך הדרך',
     body: 'אנחנו לא נעלמים אחרי ההשקה. אנחנו שותפים לטווח ארוך - עם תמיכה, עדכונים, ושיפורים שמשאירים אתכם ממוקדים בקשר הטיפולי.',
-    accent: 'bg-sanctuary-clay/8 border-sanctuary-clay/30',
-    iconBg: 'bg-sanctuary-clay/12',
+    accent: 'bg-sanctuary-clay/10 border-sanctuary-clay/30',
+    iconBg: 'bg-sanctuary-clay/10',
     iconColor: 'text-sanctuary-action',
   },
 ];

@@ -61,7 +61,7 @@ export default function AccessibilityPage() {
           className="
             flex items-center gap-4 p-5
             rounded-2xl border border-sanctuary-sage-light
-            bg-sanctuary-sage/8 mb-12
+            bg-sanctuary-sage/10 mb-12
           "
           role="note"
           aria-label="רמת עמידה בתקן"

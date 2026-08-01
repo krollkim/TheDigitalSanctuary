@@ -119,7 +119,7 @@ function LeadForm() {
   if (status === 'success') {
     return (
       <div className="anim-panel-in flex flex-col items-center text-center gap-6 py-14">
-        <div className="w-16 h-16 rounded-full bg-sanctuary-sage/12 border border-sanctuary-sage-light flex items-center justify-center">
+        <div className="w-16 h-16 rounded-full bg-sanctuary-sage/10 border border-sanctuary-sage-light flex items-center justify-center">
           <CheckCircle2 size={28} className="text-sanctuary-action" strokeWidth={1.5} />
         </div>
         <div className="flex flex-col gap-3 max-w-xs">
@@ -365,7 +365,7 @@ export default function RoadmapPage() {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             aria-hidden="true"
           >
-            <div className="w-[700px] h-[700px] rounded-full bg-sanctuary-sage/6 blur-3xl" />
+            <div className="w-[700px] h-[700px] rounded-full bg-sanctuary-sage/5 blur-3xl" />
           </div>
 
           <div className="relative z-10 max-w-2xl mx-auto px-6 sm:px-10">
@@ -375,7 +375,7 @@ export default function RoadmapPage() {
             border border-white/50 shadow-sanctuary">
               <span
                 className="hero-item inline-flex items-center gap-2 label-tag text-sanctuary-brown-mid
-                  bg-sanctuary-sage/10 border border-sanctuary-sage-light px-4 py-2 rounded-full"
+                  bg-sanctuary-action/10 border border-sanctuary-action/25 px-4 py-2 rounded-full"
               >
                 <Sparkles size={11} aria-hidden="true" />
                 שיחת Roadmap - בחינם
@@ -513,9 +513,9 @@ export default function RoadmapPage() {
                 <h2 className="font-serif text-3xl sm:text-4xl text-sanctuary-brown font-light">
                   בואו נשרטט את מפת הדרכים שלך -
                   <span className="relative inline-block mx-1">
-                    <span className="relative z-10">בחינם</span>
+                    <span className="relative z-10 text-sanctuary-action">בחינם</span>
                     <span
-                      className="absolute bottom-1 start-0 end-0 h-2 bg-sanctuary-sage-light/50
+                      className="absolute bottom-1 start-0 end-0 h-2 bg-sanctuary-action/20
                         rounded-sm -z-0"
                       aria-hidden="true"
                     />

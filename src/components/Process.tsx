@@ -13,7 +13,7 @@ const steps = [
     title: 'מכירים אתכם לפני שמתחילים',
     body: 'שיחה קצרה ללא מחויבות. אנחנו שואלים, מקשיבים, ומבינים את הפרקטיקה, הערכים, והמטופלים שלכם - לפני שמזיזים פיקסל אחד.',
     accent: 'bg-white border-sanctuary-sage-light',
-    iconBg: 'bg-sanctuary-sage/12',
+    iconBg: 'bg-sanctuary-sage/10',
     iconColor: 'text-sanctuary-action',
     numberColor: 'text-sanctuary-action/65',
     labelColor: 'bg-sanctuary-sage/10 text-sanctuary-brown-mid',
@@ -100,7 +100,7 @@ export default function Process() {
       />
       <div
         className="absolute bottom-0 start-0 w-64 h-64 rounded-full
-          bg-sanctuary-sage/8 blur-3xl -translate-x-1/4 translate-y-1/4"
+          bg-sanctuary-sage/10 blur-3xl -translate-x-1/4 translate-y-1/4"
         aria-hidden="true"
       />
 
@@ -191,7 +191,7 @@ export default function Process() {
 
             {/* Left: label + number */}
             <div className="flex items-center gap-4 md:flex-col md:items-start md:gap-2">
-              <span className="label-tag text-xs px-3 py-1.5 rounded-full bg-sanctuary-beige/12 text-sanctuary-beige/85">
+              <span className="label-tag text-xs px-3 py-1.5 rounded-full bg-sanctuary-beige/10 text-sanctuary-beige/85">
                 שלב שלישי
               </span>
               <span className="font-serif text-4xl font-light text-sanctuary-beige/45">
